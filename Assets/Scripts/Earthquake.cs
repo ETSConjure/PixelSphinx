@@ -3,13 +3,13 @@ using System.Collections;
 
 public class Earthquake : MonoBehaviour {
     int gaugeLevel;
-    const int gaugeMax=4;
+    const int gaugeMax=100;
 
 	// Use this for initialization
     void Start()
     {
         gaugeLevel = 0;
-        InvokeRepeating("fillGauge", 1, 1F);
+        InvokeRepeating("FillGauge", 1, 1F);
 	
 	}
 	
@@ -18,16 +18,44 @@ public class Earthquake : MonoBehaviour {
 	
 	}
 
-    void fillGauge()
+    /// <summary>
+    /// Actualiser l'affichage de la gauge
+    /// </summary>
+    void UpdateFixed()
+    {
+        
+
+
+
+    }
+    
+    /// <summary>
+    /// à être Appelé à chaque fois qu'on enfonce un plateau, le gage se remplis plus vite. (et par le temps)
+    /// </summary>
+    void FillGauge()
     {
         if (gaugeLevel < gaugeMax)
         {
             gaugeLevel += 1;
+
+
+            //anim state [0-90] normale, rotation
+
+            //color hue de plus en plus vers le rouge
+
+            //[90-100]
+            //anim avec les ripples
+
+
         }
         else
         {
             gaugeLevel = 0;
+            
         }
-       print("gauge is at: " + gaugeLevel);
+        print("gauge is at: " + gaugeLevel);
     }
+
+
+    
 }
