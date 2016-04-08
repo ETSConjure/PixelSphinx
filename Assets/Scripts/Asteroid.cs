@@ -26,4 +26,21 @@ public class Asteroid : MonoBehaviour
         step = speed * Time.deltaTime;
         this.transform.position = Vector3.MoveTowards(transform.position, center, step);
     }
+
+    //collider must be set as "isTrigger" in unity for this method to work
+    void OnCollisionEnter2D(Collider otherCol)
+    {
+
+
+        if (otherCol.gameObject.tag == "Player")
+        {
+            //Stun the player
+        }
+        if (otherCol.gameObject.tag == "Wedge")
+        {
+            var pmgr = FindObjectOfType<PlanetManager>();
+            pmgr.PushWedge(otherCol.gameObject.transform.rotation.z);
+        }
+    }
+
 }

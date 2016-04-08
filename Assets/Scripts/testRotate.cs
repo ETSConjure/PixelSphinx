@@ -55,8 +55,8 @@ public class testRotate : MonoBehaviour {
     /// </summary>
     void FixedUpdate()
     {
-       
-        var theta = Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta
+
+        var theta = 0;// Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta
 
 
         var planet = GameObject.Find("Planet").gameObject.GetComponent<PlanetManager>();

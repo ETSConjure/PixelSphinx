@@ -85,6 +85,94 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &150247454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 150247455}
+  - 114: {fileID: 150247456}
+  m_Layer: 0
+  m_Name: AsteroidSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &150247455
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 150247454}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+--- !u!114 &150247456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 150247454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c82cd8902191d49b45cf914b13e97c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textTime: 
+  NextSpawnTime: 1
+  AsteroidPrefab: {fileID: 160026, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+--- !u!1001 &240262242
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 13519402, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &437600384
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &437600385
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -174,7 +262,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NbCartiers: 10
   TailleCartiersEnDegres: 0
-  WedgePrefab: {fileID: 186656, guid: 901b80ca01ac0de4ca89de7f82c3709f, type: 2}
+  CartierResetRatioSpeedFactor: 0.23
+  CartierResetRatioSpeedRandomize: 1
+  CartierMinRatio: 0.4
+  CartierMaxRatio: 2
+  CartierStepSize: 0.25
+  WedgePrefab: {fileID: 170328, guid: 0b78da08dfa398840862539a74cc2377, type: 2}
 --- !u!1 &638371353
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,8 +366,6 @@ GameObject:
   - 65: {fileID: 1250089530}
   - 23: {fileID: 1250089529}
   - 114: {fileID: 1250089535}
-  - 114: {fileID: 1250089534}
-  - 114: {fileID: 1250089533}
   m_Layer: 0
   m_Name: CubePlayer
   m_TagString: Untagged
@@ -339,28 +430,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
---- !u!114 &1250089533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1250089528}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dea5240387606044ad82f94c4235e31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1250089534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1250089528}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab91e6d9b759ad545b023f33788c97ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1250089535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,4 +441,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac56b6226ed50a742a676cbfae403f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
+  fireRate: 0.2
