@@ -85,7 +85,6 @@ public class Astronaut : MonoBehaviour {
 	private float GetGroundRadius(float theta)
 	{
 		float displacement = PlanetUtilities.GetDisplacementAngle(Width / 2, height);
-		Debug.Log(displacement + "  " + Width/2 + "  " + height);
 		float radius1 = planet.GetPlanetRadius(Repeat(theta + displacement, 360));
 		float radius2 = planet.GetPlanetRadius(Repeat(theta - displacement, 360));
 		//float x1, y1, x2, y2;

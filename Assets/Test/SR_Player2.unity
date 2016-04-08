@@ -175,9 +175,10 @@ MonoBehaviour:
   NbCartiers: 10
   TailleCartiersEnDegres: 0
   CartierResetRatioSpeedFactor: 0.23
-  CartierResetRatioSpeedRandomize: 0
+  CartierResetRatioSpeedRandomize: 1
   CartierMinRatio: 0.4
   CartierMaxRatio: 2
+  CartierStepSize: 0.25
   WedgePrefab: {fileID: 170328, guid: 0b78da08dfa398840862539a74cc2377, type: 2}
 --- !u!1001 &556403999
 Prefab:
