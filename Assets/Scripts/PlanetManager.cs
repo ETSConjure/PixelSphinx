@@ -15,10 +15,8 @@ public class PlanetManager : MonoBehaviour
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 
-   
-
     // Use this for initialization
-    void Start () {
+    void Awake () {
         TailleCartiersEnDegres =  360.0f / NbCartiers;
           
         for(int i = 0; i < NbCartiers; i++)
@@ -26,7 +24,6 @@ public class PlanetManager : MonoBehaviour
             float debutAngleTheta = i* TailleCartiersEnDegres;
             var w = new Wedge() {tMin = debutAngleTheta, tMax = debutAngleTheta + TailleCartiersEnDegres};
            
-
             //float angle = i * Mathf.PI * 2 / NbCartiers * 360;
             //var wedgePos = GetPlanetCoordinatesFromPlayerXY(debutAngleTheta, 0);
             // wedgePos.x -= Mathf.Cos(debutAngleTheta * Mathf.PI / 180);
@@ -36,7 +33,6 @@ public class PlanetManager : MonoBehaviour
             w.sprite = GameObject.Find(obj.name);
             wedges.Add(w);  //pushes at end.
         }
-       
     }
 	
 	// Update is called once per frame
@@ -47,6 +43,7 @@ public class PlanetManager : MonoBehaviour
 
     void FixedUpdate()
     {
+		if (!this.CartierResetRatioSpeedRandomize) return;
         //Ramener les plateforme vers leur position initiale 0;
 
         foreach (var w in wedges)
@@ -80,7 +77,7 @@ public class PlanetManager : MonoBehaviour
 
             w.sprite.transform.localScale = new Vector3(w.offset, w.offset,0.0f);
         }
-
+		//TODO_SR For each player
     }
 
     public void PushWedge(float thetaPlayerX)
@@ -169,12 +166,11 @@ public class PlanetManager : MonoBehaviour
     /// Radius sphere est scale/2
     /// </summary>
     /// <returns></returns>
-    public float GetPlanetRadius(float thetaPlayerX)
-    {
-        var wedge = GetWedgeFromTheta(thetaPlayerX);
-        return GetPlanetRadius() * wedge.offset;
-    }
-
+	public float GetPlanetRadius(float thetaPlayerX)
+	{
+		var wedge = GetWedgeFromTheta(thetaPlayerX);
+		return GetPlanetRadius() * wedge.offset;
+	}
 
 
     public Vector3 GetPlanetCoordinatesFromPlayerXY(float playerLocalX, float playerLocalY)

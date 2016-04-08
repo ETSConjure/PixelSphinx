@@ -11,6 +11,6 @@ public class PlanetUtilities {
 
 	public static float GetDisplacementAngle(float delta, float radius)
 	{
-		return Mathf.Rad2Deg * radius / delta;
+		return Mathf.Rad2Deg * delta / radius;
 	}
 }

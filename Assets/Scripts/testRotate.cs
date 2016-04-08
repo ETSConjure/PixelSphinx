@@ -4,11 +4,10 @@ using System.Collections;
 
 public class testRotate : MonoBehaviour {
 
-
-  
     public  float fireRate = 0.2f;
     private float lastShot = 0.0f;
     private float speed = 33.2f;
+	public bool check;
 
     void Update()
     {
@@ -41,7 +40,7 @@ public class testRotate : MonoBehaviour {
  
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	  
@@ -57,7 +56,7 @@ public class testRotate : MonoBehaviour {
     {
        
         var theta = Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta
-
+		if (check) theta = 0;
 
         var planet = GameObject.Find("Planet").gameObject.GetComponent<PlanetManager>();
 
@@ -69,7 +68,8 @@ public class testRotate : MonoBehaviour {
        // var y = r * Mathf.Sin(theta * Mathf.PI / 180);  // + y0 du player 
 
         var player = GameObject.Find("CubePlayer").gameObject;
-         
+
+		Vector3 pos = planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f);
         //player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(x, y, 0 ), Time.deltaTime);
         player.transform.position = Vector3.Lerp(player.transform.position,
             planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f), Time.fixedDeltaTime);
