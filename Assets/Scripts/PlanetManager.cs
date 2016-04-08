@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlanetManager : MonoBehaviour
 {
@@ -7,19 +9,17 @@ public class PlanetManager : MonoBehaviour
     public int NbCartiers = 10;
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
 
-    var wedges = new List<Wedge>();
+    public List<Wedge> wedges = new List<Wedge>();
     
 
     // Use this for initialization
     void Start () {
-        TailleCartiersEnRadiants = 360.0 / NbCartiers;
-
-        float debutAngleTheta = 0.0;
-
+        TailleCartiersEnDegres =  360.0f / NbCartiers;
+          
         for(int i = 0; i < NbCartiers; i++)
         {
-            debutAngleTheta = i*TailleCartiersEnRadiants;
-            wedges.Add(new wedges(){tMin = debutAngleTheta, tMax = debutAngleTheta + TailleCartiersEnRadiants});
+            float debutAngleTheta = i* TailleCartiersEnDegres;
+            wedges.Add(new Wedge(){tMin = debutAngleTheta, tMax = debutAngleTheta + TailleCartiersEnDegres });
         }
     }
 	
@@ -33,18 +33,17 @@ public class PlanetManager : MonoBehaviour
 
     public float GetPlanetRadius()
     {
-
+        return 5.0f;
     }
 
 
     public Vector3 GetPlanetCoordinatesFromPlayerXY(float playerLocalX, float playerLocalY)
     {
         var theta = playerLocalX;
-        double x = r * Math.Cos(theta * Math.PI / 180);
-        double y = r * Math.Sin(theta * Math.PI / 180) + playerLocalY;  
+        var x = GetPlanetRadius() * Math.Cos(theta * Math.PI / 180);
+        var y = GetPlanetRadius() * Math.Sin(theta * Math.PI / 180) + playerLocalY;  
 
-
-        return new Vector3(x,y,0);
+        return new Vector3((float)x, (float)y, 0);
     }
 
 
@@ -54,7 +53,7 @@ public class PlanetManager : MonoBehaviour
     /// <param name="thetaPlayerX"></param>
     public int GetWedgeIndex(float thetaPlayerX)
     {
-        return  Math.Floor(thetaPlayerX / TailleCartiersEnRadiants);
+        return  (int)Math.Floor(thetaPlayerX / TailleCartiersEnDegres);
     }
 
     /// <summary>
@@ -84,9 +83,9 @@ public class PlanetManager : MonoBehaviour
     /// </summary>
     public class Wedge
     {
-        float yoffset = 0;  //valeurs entre -1 et 1; -1 étant renfoncé, 0 position normale, et 1 vers l'extérieur
-        float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
-        float tMax = 0;
+        public float yoffset = 0;  //valeurs entre -1 et 1; -1 étant renfoncé, 0 position normale, et 1 vers l'extérieur
+        public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
+        public float tMax = 0;
 
     }
 
