@@ -26,10 +26,10 @@ public class PlanetManager : MonoBehaviour
            
 
             //float angle = i * Mathf.PI * 2 / NbCartiers * 360;
-            var wedgePos = GetPlanetCoordinatesFromPlayerXY(debutAngleTheta, 0);
-            wedgePos.x -= 8/ Mathf.PI * Mathf.Cos(debutAngleTheta * Mathf.PI / 180);
-            wedgePos.y -= 8/ Mathf.PI * Mathf.Sin(debutAngleTheta * Mathf.PI / 180);
-            var obj = Instantiate(WedgePrefab, wedgePos, Quaternion.Euler(0, 0, debutAngleTheta));
+            //var wedgePos = GetPlanetCoordinatesFromPlayerXY(debutAngleTheta, 0);
+            // wedgePos.x -= Mathf.Cos(debutAngleTheta * Mathf.PI / 180);
+            //wedgePos.y -= Mathf.Sin(debutAngleTheta * Mathf.PI / 180);
+            var obj = Instantiate(WedgePrefab, new Vector3(0.0f,0.0f, 0.0f), Quaternion.Euler(0, 0, debutAngleTheta));
             obj.name = "wedge_" + i;
             w.sprite = GameObject.Find(obj.name);
             wedges.Add(w);  //pushes at end.
@@ -54,54 +54,77 @@ public class PlanetManager : MonoBehaviour
 
     }
 
-
     public void PushWedge(float thetaPlayerX)
     {
-        var index = GetWedgeIndex(thetaPlayerX);
-        var w = wedges[index];
+            var index = GetWedgeIndex(thetaPlayerX);
+            var w = wedges[index];
 
-        
-
-        w.offset = w.offset - 0.5f;
-        if (w.offset < -1.0f)
-            w.offset = -1.0f;
-
-        var angle = w.tMin; //w.tMax - TailleCartiersEnDegres/2;
-
-        var normalPos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
-        normalPos.x -= 8 / Mathf.PI * Mathf.Cos(angle * Mathf.PI / 180);
-        normalPos.y -= 8 / Mathf.PI * Mathf.Sin(angle * Mathf.PI / 180);
-
-        var wedgePos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
-        wedgePos.x -=  8 / Mathf.PI * Mathf.Cos(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Cos(angle * Mathf.PI / 180);     
-        wedgePos.y -=  8 / Mathf.PI * Mathf.Sin(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Sin(angle * Mathf.PI / 180);
-
-    
-        w.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
-
-        ///push back l'opposée
-        var indexOppose = GetWedgeOpposé(index);
-        var v = wedges[indexOppose];
-
-        v.offset = v.offset + 0.5f;
-        if (v.offset > 1.0f)
-            v.offset = 1.0f;
-
-         angle = v.tMin; //w.tMax - TailleCartiersEnDegres/2;
-
-         normalPos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
-        normalPos.x -= 8 / Mathf.PI * Mathf.Cos(angle * Mathf.PI / 180);
-        normalPos.y -= 8 / Mathf.PI * Mathf.Sin(angle * Mathf.PI / 180);
-
-         wedgePos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
-        wedgePos.x -= 8 / Mathf.PI * Mathf.Cos(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Cos(angle * Mathf.PI / 180);
-        wedgePos.y -= 8 / Mathf.PI * Mathf.Sin(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Sin(angle * Mathf.PI / 180);
+            w.offset = w.offset - 0.25f;
+            if (w.offset < 0.5f)
+                w.offset = 0.5f;
 
 
-        v.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
+            w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
 
+            //push back l'opposée
+            var indexOppose = GetWedgeOpposé(index);
+            var v = wedges[indexOppose];
 
+            v.offset = v.offset + 0.25f;
+            if (v.offset > 1.5f)
+                v.offset = 1.5f;
+
+            v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
     }
+
+
+    //public void PushWedge(float thetaPlayerX)
+    //{
+    //    var index = GetWedgeIndex(thetaPlayerX);
+    //    var w = wedges[index];
+
+
+
+    //    w.offset = w.offset - 0.5f;
+    //    if (w.offset < -1.0f)
+    //        w.offset = -1.0f;
+
+    //    var angle = w.tMin; //w.tMax - TailleCartiersEnDegres/2;
+
+    //    var normalPos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
+    //    normalPos.x -=  Mathf.Cos(angle * Mathf.PI / 180);
+    //    normalPos.y -=  Mathf.Sin(angle * Mathf.PI / 180);
+
+    //    var wedgePos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
+    //    wedgePos.x -=  Mathf.Cos(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Cos(angle * Mathf.PI / 180);     
+    //    wedgePos.y -=  Mathf.Sin(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Sin(angle * Mathf.PI / 180);
+
+
+    //    w.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
+
+    //    ///push back l'opposée
+    //    var indexOppose = GetWedgeOpposé(index);
+    //    var v = wedges[indexOppose];
+
+    //    v.offset = v.offset + 0.5f;
+    //    if (v.offset > 1.0f)
+    //        v.offset = 1.0f;
+
+    //     angle = v.tMin; //w.tMax - TailleCartiersEnDegres/2;
+
+    //     normalPos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
+    //    normalPos.x -= Mathf.Cos(angle * Mathf.PI / 180);
+    //    normalPos.y -= Mathf.Sin(angle * Mathf.PI / 180);
+
+    //     wedgePos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
+    //    wedgePos.x -= Mathf.Cos(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Cos(angle * Mathf.PI / 180);
+    //    wedgePos.y -= Mathf.Sin(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Sin(angle * Mathf.PI / 180);
+
+
+    //    v.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
+
+
+    //}
 
 
     /// <summary>
@@ -113,14 +136,26 @@ public class PlanetManager : MonoBehaviour
         return gameObject.transform.localScale.x / 2.0f;
     }
 
+    /// <summary>
+    /// Radius sphere est scale/2
+    /// </summary>
+    /// <returns></returns>
+    public float GetPlanetRadius(float thetaPlayerX)
+    {
+        var wedge = GetWedgeFromTheta(thetaPlayerX);
+        return GetPlanetRadius() * wedge.offset;
+    }
+
+
 
     public Vector3 GetPlanetCoordinatesFromPlayerXY(float playerLocalX, float playerLocalY)
     {
         var theta = playerLocalX;
-        var x = GetPlanetRadius() * Math.Cos(theta * Math.PI / 180);
-        var y = GetPlanetRadius() * Math.Sin(theta * Math.PI / 180) + playerLocalY;  
+        var wedgeRadius = GetPlanetRadius(playerLocalX);
+        var x = wedgeRadius * Mathf.Cos(theta * Mathf.PI / 180);
+        var y = wedgeRadius * Mathf.Sin(theta * Mathf.PI / 180) + playerLocalY;  
 
-        return new Vector3((float)x, (float)y, 0);
+        return new Vector3(x, y, 0);
     }
 
 
@@ -160,7 +195,7 @@ public class PlanetManager : MonoBehaviour
     /// </summary>
     public class Wedge
     {
-        public float offset = 0;  //valeurs entre -1 et 1; -1 étant renfoncé, 0 position normale, et 1 vers l'extérieur
+        public float offset = 1.0f;  //valeurs entre -1 et 1; -1 étant renfoncé, 0 position normale, et 1 vers l'extérieur
         public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
         public float tMax = 0;
 
