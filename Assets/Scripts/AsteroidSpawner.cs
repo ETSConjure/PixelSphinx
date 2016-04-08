@@ -51,8 +51,6 @@ public class AsteroidSpawner : TimerFunctionsClass
         }
 
 
-
-
         //Cooldown untill next random spawn
         SetTimer(NextSpawnTime, SpawnAsteroidEvent);
         StartTimer();

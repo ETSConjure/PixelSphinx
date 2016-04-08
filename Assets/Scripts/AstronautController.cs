@@ -51,8 +51,11 @@ public class AstronautController : MonoBehaviour {
 
 		if (input.Ranges.ContainsKey("Dash"))
 		{
-			if(input.Ranges["Dash"] > 0.8f)
-				_astronaut.Dash();
+		    if (input.Ranges["Dash"] > 0.8f)
+		    {
+                _astronaut.Dash();
+            }
+		    
 		}
 	}
 

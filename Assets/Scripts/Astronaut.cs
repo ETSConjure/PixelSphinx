@@ -13,7 +13,8 @@ public class Astronaut : MonoBehaviour {
 	public GameObject SpriteDash;
 
 	public float Width;
-
+    public float DashTime = 0.4f; //Temps de l'animation et rate limiting
+    private float lastDashTime = 0f;
 	public float StepTime;
 	public float JumpSpeed;
 	public float Gravity;
@@ -185,7 +186,7 @@ public class Astronaut : MonoBehaviour {
 			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -x, height) * Time.deltaTime;
 			//Debug.Log("Moving! - " + height);
 			//Debug.Log("Daaa - " + movement);
-			float newTheta = theta + movement;
+			float newTheta = (360 + theta + movement) % 360; // angle positif
 
 			float newHeight = GetGroundRadius(newTheta);
 			if (newHeight > height)
@@ -210,9 +211,14 @@ public class Astronaut : MonoBehaviour {
 
 	public void Dash()
 	{
-		if (_state >= AstronautState.Ejecting)
-			return;
+	    
+	    if (Time.time < DashTime + lastDashTime)
+            return;
+        
+        if (_state >= AstronautState.Ejecting)
+		return;
 
+	    lastDashTime = Time.time;
         planet.PushWedge(this.theta);
 	}
 
