@@ -8,8 +8,10 @@ public class PlanetManager : MonoBehaviour
 
     public int NbCartiers = 10;
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
-    public float CartierResetRatioSpeedFactor = 1.0f;
-    public bool CartierResetRatioSpeedRandomize = false;
+    public float CartierResetRatioSpeedFactor = 0.23f;   //Entre 0.05 et 1 ou plus   on aime que ca restore lentement, randomnly
+    public bool  CartierResetRatioSpeedRandomize = true;
+    public float CartierMinRatio = 0.4f;
+    public float CartierMaxRatio = 2.0f;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 
@@ -61,7 +63,7 @@ public class PlanetManager : MonoBehaviour
                 }
                 else
                 {
-                    w.offset -= 0.005f*CartierResetRatioSpeedFactor*UnityEngine.Random.Range(0f, 2f);
+                    w.offset -= 0.005f*CartierResetRatioSpeedFactor * UnityEngine.Random.Range(-0.5f, 2f);
                 }
             }
             else if (w.offset < 1.0f)
@@ -72,7 +74,7 @@ public class PlanetManager : MonoBehaviour
                 }
                 else
                 {
-                    w.offset += 0.005f*CartierResetRatioSpeedFactor*UnityEngine.Random.Range(0f, 2f);
+                    w.offset += 0.005f*CartierResetRatioSpeedFactor*UnityEngine.Random.Range(0f, 3f);
                 }
             }
 
@@ -87,7 +89,7 @@ public class PlanetManager : MonoBehaviour
             var w = wedges[index];
 
             w.offset = w.offset - 0.25f;
-            if (w.offset < 0.5f)
+            if (w.offset < CartierMinRatio)
                 w.offset = 0.5f;
 
 
@@ -98,7 +100,7 @@ public class PlanetManager : MonoBehaviour
             var v = wedges[indexOppose];
 
             v.offset = v.offset + 0.25f;
-            if (v.offset > 1.5f)
+            if (v.offset > CartierMaxRatio)
                 v.offset = 1.5f;
 
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
