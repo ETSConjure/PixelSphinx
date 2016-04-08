@@ -78,7 +78,7 @@ public class PlanetManager : MonoBehaviour
                 }
             }
 
-            w.sprite.transform.localScale = new Vector3(w.offset, w.offset,0.0f);
+            w.sprite.transform.localScale = new Vector3(w.offset, w.offset,1.0f);
         }
 
     }
