@@ -12,6 +12,7 @@ public class PlanetManager : MonoBehaviour
     public bool  CartierResetRatioSpeedRandomize = true;
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
+    public float CartierStepSize = 0.25;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 
@@ -88,7 +89,7 @@ public class PlanetManager : MonoBehaviour
             var index = GetWedgeIndex(thetaPlayerX);
             var w = wedges[index];
 
-            w.offset = w.offset - 0.25f;
+            w.offset = w.offset - CartierStepSize;
             if (w.offset < CartierMinRatio)
                 w.offset = 0.5f;
 
@@ -99,7 +100,7 @@ public class PlanetManager : MonoBehaviour
             var indexOppose = GetWedgeOpposé(index);
             var v = wedges[indexOppose];
 
-            v.offset = v.offset + 0.25f;
+            v.offset = v.offset + CartierStepSize;
             if (v.offset > CartierMaxRatio)
                 v.offset = 1.5f;
 
@@ -224,7 +225,7 @@ public class PlanetManager : MonoBehaviour
     /// </summary>
     public class Wedge
     {
-        public float offset = 1.0f;  //valeurs entre -1 et 1; -1 étant renfoncé, 0 position normale, et 1 vers l'extérieur
+        public float offset = 1.0f;  //valeurs entre minRatio et maxRatio; < 1 étant renfoncé, 1 position normale, et > 1 vers l'extérieur
         public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
         public float tMax = 0;
 
