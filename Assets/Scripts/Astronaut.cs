@@ -13,13 +13,14 @@ public class Astronaut : MonoBehaviour {
 	public GameObject SpriteDash;
 
 	public float Width;
-
+    public float DashTime = 0.4f; //Temps de l'animation et rate limiting
+    private float lastDashTime = 0f;
 	public float StepTime;
 	public float JumpSpeed;
 	public float Gravity;
 	public float Speed;
 	public float EjectSpeed;
-	public float DashSpeed;
+	//public float DashSpeed;
 
 	public PlanetManager planet;
 
@@ -63,9 +64,13 @@ public class Astronaut : MonoBehaviour {
 	private float walkTime = 0;
 	private int nextStep = 1;
 
-	// Use this for initialization
-	void Start () {
-		State = AstronautState.Idle;
+    // Use this for initialization
+    public void Start () {
+	    if (!planet)
+	    {
+	        planet = FindObjectOfType<PlanetManager>();
+	    }
+	    State = AstronautState.Idle;
 		//Debug.Log(planet.GetPlanetRadius(0));
 		theta = 0;
 		height = planet.GetPlanetRadius(theta);
@@ -100,9 +105,9 @@ public class Astronaut : MonoBehaviour {
 	{
 		return Mathf.Repeat(num + limit, limit);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    public void Update () {
 		float delta = Time.deltaTime;
 
 		if (!grounded)
@@ -117,12 +122,12 @@ public class Astronaut : MonoBehaviour {
 		float radius = GetGroundRadius();
 		if (grounded = (height <= radius))
 		{
-			if (State == AstronautState.Dashing)
+			/*if (State == AstronautState.Dashing)
 			{
 				planet.PushWedge(Repeat(theta,360));
 				State = AstronautState.Idle;
 				//TODO_SR Create dash impact here
-			}
+			}*/
 
 			height = radius;
 			if (State == AstronautState.Jumping)
@@ -195,7 +200,7 @@ public class Astronaut : MonoBehaviour {
 			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -x, height) * Time.deltaTime;
 			//Debug.Log("Moving! - " + height);
 			//Debug.Log("Daaa - " + movement);
-			float newTheta = theta + movement;
+			float newTheta = (360 + theta + movement) % 360; // angle positif
 
 			float newHeight = GetGroundRadius(newTheta);
 			if (newHeight > height)
@@ -206,13 +211,25 @@ public class Astronaut : MonoBehaviour {
 
 			theta = newTheta;
 		}
+	    if (State == AstronautState.Dashing && grounded)
+	    {
+            //TODO arreter mouvement lateral
+            State=AstronautState.Idle;
+	    }
 	}
 
 	public void Jump()
 	{
-		if (State >= AstronautState.Ejecting || State == AstronautState.Jumping)
+		if (State >= AstronautState.Ejecting)
 			return;
-		if (!grounded) return;
+	    if (State == AstronautState.Jumping)
+	    {
+	        Dash();
+            State=AstronautState.Dashing;  //TODO relacher l'état Dashing
+	        return;
+
+	    }
+	    if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
 		State = AstronautState.Jumping;
@@ -220,11 +237,18 @@ public class Astronaut : MonoBehaviour {
 
 	public void Dash()
 	{
-		if (_state >= AstronautState.Ejecting)
-			return;
+	    
+	    if (Time.time < DashTime + lastDashTime)
+            return;
+        
+        if (_state >= AstronautState.Ejecting)
+		return;
 
-		State = AstronautState.Dashing;
-		vSpeed = -DashSpeed;
+	    lastDashTime = Time.time;
+        planet.PushWedge(this.theta);
+
+		//State = AstronautState.Dashing;
+		//vSpeed = -DashSpeed;
 	}
 
 	public void Eject()

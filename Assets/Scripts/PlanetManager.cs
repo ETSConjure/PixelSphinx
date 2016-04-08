@@ -10,6 +10,7 @@ public class PlanetManager : MonoBehaviour
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
     public float CartierResetRatioSpeedFactor = 0.23f;   //Entre 0.05 et 1 ou plus   on aime que ca restore lentement, randomnly
     public bool  CartierResetRatioSpeedRandomize = true;
+    public bool  CartierResetOverTime = true;
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
     public float CartierStepSize = 0.25f;
@@ -17,7 +18,7 @@ public class PlanetManager : MonoBehaviour
     public List<Wedge> wedges = new List<Wedge>();
 
     // Use this for initialization
-    void Awake () {
+    public void Awake () {
         TailleCartiersEnDegres =  360.0f / NbCartiers;
           
         for(int i = 0; i < NbCartiers; i++)
@@ -35,16 +36,16 @@ public class PlanetManager : MonoBehaviour
             wedges.Add(w);  //pushes at end.
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    public void Update () {
 	
 
 	}
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
-		if (!this.CartierResetRatioSpeedRandomize) return;
+		if (!this.CartierResetOverTime) return;
         //Ramener les plateforme vers leur position initiale 0;
 
         foreach (var w in wedges)
@@ -88,7 +89,7 @@ public class PlanetManager : MonoBehaviour
 
             w.offset = w.offset - CartierStepSize;
             if (w.offset < CartierMinRatio)
-                w.offset = 0.5f;
+                w.offset = CartierMinRatio;
 
 
             w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
@@ -99,7 +100,7 @@ public class PlanetManager : MonoBehaviour
 
             v.offset = v.offset + CartierStepSize;
             if (v.offset > CartierMaxRatio)
-                v.offset = 1.5f;
+                v.offset = CartierMaxRatio;
 
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
     }
@@ -213,7 +214,7 @@ public class PlanetManager : MonoBehaviour
     /// <returns></returns>
     public Wedge GetWedgeFromTheta(float thetaPlayerX)
     {
-        return wedges[GetWedgeIndex(thetaPlayerX)];
+        return wedges[GetWedgeIndex(thetaPlayerX % 360)];
     }
 
     /// <summary>
