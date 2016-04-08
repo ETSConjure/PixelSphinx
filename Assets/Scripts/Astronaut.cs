@@ -62,8 +62,8 @@ public class Astronaut : MonoBehaviour {
 	private float walkTime = 0;
 	private int nextStep = 1;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    public void Start () {
 	    if (!planet)
 	    {
 	        planet = FindObjectOfType<PlanetManager>();
@@ -103,9 +103,9 @@ public class Astronaut : MonoBehaviour {
 	{
 		return Mathf.Repeat(num + limit, limit);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    public void Update () {
 		float delta = Time.deltaTime;
 
 		if (!grounded)

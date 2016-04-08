@@ -9,7 +9,7 @@ public class testRotate : MonoBehaviour {
     private float speed = 33.2f;
 	public bool check;
 
-    void Update()
+    public void Update()
     {
         if(Input.GetKeyDown("space") || Input.GetKey("s"))
         {
@@ -42,9 +42,9 @@ public class testRotate : MonoBehaviour {
 	void Start () {
 		
 	}
-	
-	  
- 
+
+
+
 
 
     /// <summary>
@@ -52,7 +52,7 @@ public class testRotate : MonoBehaviour {
     /// Le player se déplace de gauche a droite en x et la valeur de x représente l'angle theta
     ///           saute en y 
     /// </summary>
-    void FixedUpdate()
+    public void FixedUpdate()
     {
        
         var theta = Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta

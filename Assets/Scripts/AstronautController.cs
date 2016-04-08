@@ -9,8 +9,8 @@ public class AstronautController : MonoBehaviour {
 
 	public int PlayerNumber;
 
-	// Use this for initialization
-	void Start()
+    // Use this for initialization
+    public void Start()
 	{
 		InputManager.Instance.PushActiveContext("Gameplay", PlayerNumber);
 		InputManager.Instance.AddCallback(PlayerNumber, HandlePlayerAxis);

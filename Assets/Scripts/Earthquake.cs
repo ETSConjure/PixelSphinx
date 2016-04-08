@@ -6,33 +6,33 @@ public class Earthquake : MonoBehaviour {
     const int gaugeMax=100;
 
 	// Use this for initialization
-    void Start()
+    public void Start()
     {
         gaugeLevel = 0;
         InvokeRepeating("FillGauge", 1, 1F);
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    public void Update () {
 	
 	}
 
     /// <summary>
     /// Actualiser l'affichage de la gauge
     /// </summary>
-    void UpdateFixed()
+    public  void UpdateFixed()
     {
         
 
 
 
     }
-    
+
     /// <summary>
     /// à être Appelé à chaque fois qu'on enfonce un plateau, le gage se remplis plus vite. (et par le temps)
     /// </summary>
-    void FillGauge()
+    public void FillGauge()
     {
         if (gaugeLevel < gaugeMax)
         {

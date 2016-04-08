@@ -7,21 +7,21 @@ public class Asteroid : MonoBehaviour
     public float speed;
     public float step;
 
-	// Use this for initialization
-    void Start()
+    // Use this for initialization
+    public void Start()
     {
         speed = Random.Range(0.9F, 3F);
         // print(speed);
         center = new Vector3(0, 0);
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    public void Update () {
             MoveObject(center);
 
 	}
 
-    void MoveObject(Vector3 center)
+    public void MoveObject(Vector3 center)
     {
         step = speed * Time.deltaTime;
         this.transform.position = Vector3.MoveTowards(transform.position, center, step);
