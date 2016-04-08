@@ -9,8 +9,11 @@ public class PlanetManager : MonoBehaviour
     public int NbCartiers = 10;
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
 
+    public GameObject WedgePrefab = null;
+
     public List<Wedge> wedges = new List<Wedge>();
-    
+
+   
 
     // Use this for initialization
     void Start () {
@@ -19,8 +22,18 @@ public class PlanetManager : MonoBehaviour
         for(int i = 0; i < NbCartiers; i++)
         {
             float debutAngleTheta = i* TailleCartiersEnDegres;
-            wedges.Add(new Wedge(){tMin = debutAngleTheta, tMax = debutAngleTheta + TailleCartiersEnDegres });
+            var w = new Wedge() {tMin = debutAngleTheta, tMax = debutAngleTheta + TailleCartiersEnDegres};
+            wedges.Add(w);  //pushes at end.
+
+            //float angle = i * Mathf.PI * 2 / NbCartiers * 360;
+            var wedgePos = GetPlanetCoordinatesFromPlayerXY(debutAngleTheta, 0);
+            wedgePos.x -= 8/ Mathf.PI * Mathf.Cos(debutAngleTheta * Mathf.PI / 180);
+            wedgePos.y -= 8/ Mathf.PI * Mathf.Sin(debutAngleTheta * Mathf.PI / 180);
+            Instantiate(WedgePrefab, wedgePos, Quaternion.Euler(0, 0, debutAngleTheta));
+         
+
         }
+       
     }
 	
 	// Update is called once per frame
@@ -29,11 +42,25 @@ public class PlanetManager : MonoBehaviour
 
 	}
 
+    void FixedUpdate()
+    {
+        //Ramener les plateforme vers leur position initiale 0;
+
+        foreach (var w in wedges)
+        {
+
+        }
+
+    }
 
 
+    /// <summary>
+    /// Radius sphere est scale/2
+    /// </summary>
+    /// <returns></returns>
     public float GetPlanetRadius()
     {
-        return 5.0f;
+        return gameObject.transform.localScale.x / 2.0f;
     }
 
 
@@ -86,6 +113,8 @@ public class PlanetManager : MonoBehaviour
         public float yoffset = 0;  //valeurs entre -1 et 1; -1 étant renfoncé, 0 position normale, et 1 vers l'extérieur
         public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
         public float tMax = 0;
+
+        public GameObject sprite;         //sprite et collider 2D
 
     }
 
