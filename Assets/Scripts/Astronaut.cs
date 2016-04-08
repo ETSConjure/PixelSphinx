@@ -212,6 +212,8 @@ public class Astronaut : MonoBehaviour {
 	{
 		if (_state >= AstronautState.Ejecting)
 			return;
+
+        planet.PushWedge(this.theta);
 	}
 
 	public void OnGUI()

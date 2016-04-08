@@ -7,7 +7,7 @@ public class AsteroidSpawner : TimerFunctionsClass
 
     public float NextSpawnTime = 1.0f;
     public GameObject AsteroidPrefab;
-    public bool GenerationVersLesjoueurs = true;  //random lorsque false;
+    public bool GenerationVersLesjoueurs = false;  //random lorsque false;
 
 	// Use this for initialization
 	void Start ()
