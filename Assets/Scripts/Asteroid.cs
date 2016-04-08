@@ -28,7 +28,7 @@ public class Asteroid : MonoBehaviour
     }
 
     //collider must be set as "isTrigger" in unity for this method to work
-    void OnCollisionEnter2D(Collider otherCol)
+    public void OnTriggerEnter(Collider otherCol)
     {
 
 
@@ -39,7 +39,8 @@ public class Asteroid : MonoBehaviour
         if (otherCol.gameObject.tag == "Wedge")
         {
             var pmgr = FindObjectOfType<PlanetManager>();
-            pmgr.PushWedge(otherCol.gameObject.transform.rotation.z);
+            pmgr.PushWedge(otherCol.gameObject.transform.parent.eulerAngles.z);
+            Destroy(this.gameObject);
         }
     }
 
