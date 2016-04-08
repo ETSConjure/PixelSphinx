@@ -15,6 +15,8 @@ public class Astronaut : MonoBehaviour {
 	public float StepTime;
 	public float JumpSpeed;
 
+	public PlanetManager planet;
+
 	private AstronautState _state;
 	private AstronautState State
 	{
@@ -56,6 +58,7 @@ public class Astronaut : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		State = AstronautState.Idle;
+		transform.position = new Vector3(transform.position.x, planet.GetPlanetRadius(0));
 	}
 	
 	// Update is called once per frame
