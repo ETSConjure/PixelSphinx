@@ -4,15 +4,52 @@ using System.Collections;
 
 public class testRotate : MonoBehaviour {
 
+
+  
+    public  float fireRate = 1.0f;
+    private float lastShot = 0.0f;
+
+
+    void Update()
+    {
+        if(Input.GetKeyDown("space") || Input.GetKey("s"))
+        {
+
+            Fire();
+        }
+    }
+
+    private void Fire()
+    {
+        if (Time.time > fireRate + lastShot)
+        {
+            lastShot = Time.time;
+
+            var speed = 13.2f;
+            var theta = Time.realtimeSinceStartup * speed % 360.0f;
+
+
+
+            var pmgr = FindObjectOfType<PlanetManager>();
+            pmgr.PushWedge(theta);
+
+
+          
+            var index = pmgr.GetWedgeIndex(theta);
+            
+
+        }
+    }
+
+ 
 	// Use this for initialization
 	void Start () {
 	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	  
+ 
+
 
     /// <summary>
     /// Juste pour tester le mouvement du player autour du cercle. 
@@ -21,18 +58,18 @@ public class testRotate : MonoBehaviour {
     /// </summary>
     void FixedUpdate()
     {
-        var speed = 13.2;
-        var theta = Time.realtimeSinceStartup * speed % 360.0; // Position X du player = angle theta
-        var r = 5.0;  //sphereradius
+        var speed = 13.2f;
+        var theta = Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta
+        var r = 4.5f;  //sphereradius
 
 
         // XY coordinates 
-        double x = r * Math.Cos(theta * Math.PI / 180);
-        double y = r * Math.Sin(theta * Math.PI / 180);  // + y0 du player 
+        var x = r * Mathf.Cos(theta * Mathf.PI / 180);
+        var y = r * Mathf.Sin(theta * Mathf.PI / 180);  // + y0 du player 
 
         var player = GameObject.Find("CubePlayer").gameObject;
          
-        player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(  (float)x, (float)y, 0 ), Time.deltaTime);
+        player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(x, y, 0 ), Time.deltaTime);
 
     }
 }
