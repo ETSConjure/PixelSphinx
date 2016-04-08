@@ -10,7 +10,7 @@ public class Asteroid : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
-        speed = Random.Range(0.9F, 3F);
+        speed = Random.Range(1.8F, 3F);
         // print(speed);
         center = new Vector3(0, 0);
 	}
