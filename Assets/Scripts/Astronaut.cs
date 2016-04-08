@@ -197,13 +197,25 @@ public class Astronaut : MonoBehaviour {
 
 			theta = newTheta;
 		}
+	    if (State == AstronautState.Dashing && grounded)
+	    {
+            //TODO arreter mouvelement lateral
+            State=AstronautState.Idle;
+	    }
 	}
 
 	public void Jump()
 	{
-		if (State >= AstronautState.Ejecting || State == AstronautState.Jumping)
+		if (State >= AstronautState.Ejecting)
 			return;
-		if (!grounded) return;
+	    if (State == AstronautState.Jumping)
+	    {
+	        Dash();
+            State=AstronautState.Dashing;  //TODO relacher l'état Dashing
+	        return;
+
+	    }
+	    if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
 		State = AstronautState.Jumping;
