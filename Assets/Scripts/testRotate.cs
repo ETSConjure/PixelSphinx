@@ -6,15 +6,14 @@ public class testRotate : MonoBehaviour {
 
 
   
-    public  float fireRate = 1.0f;
+    public  float fireRate = 0.2f;
     private float lastShot = 0.0f;
-
+    private float speed = 33.2f;
 
     void Update()
     {
         if(Input.GetKeyDown("space") || Input.GetKey("s"))
         {
-
             Fire();
         }
     }
@@ -25,17 +24,15 @@ public class testRotate : MonoBehaviour {
         {
             lastShot = Time.time;
 
-            var speed = 13.2f;
+            
             var theta = Time.realtimeSinceStartup * speed % 360.0f;
 
 
 
             var pmgr = FindObjectOfType<PlanetManager>();
             pmgr.PushWedge(theta);
-
-
-          
-            var index = pmgr.GetWedgeIndex(theta);
+             
+             
             
 
         }
@@ -58,7 +55,7 @@ public class testRotate : MonoBehaviour {
     /// </summary>
     void FixedUpdate()
     {
-        var speed = 13.2f;
+       
         var theta = Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta
 
 

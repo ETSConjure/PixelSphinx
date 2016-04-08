@@ -8,7 +8,10 @@ public class Asteroid : MonoBehaviour
     public float step;
 
 	// Use this for initialization
-	void Start () {
+    void Start()
+    {
+        speed = Random.Range(0.1F, 2F);
+        print(speed);
         center = new Vector3(0, 0);
 	}
 	
