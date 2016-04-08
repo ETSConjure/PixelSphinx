@@ -40,10 +40,10 @@ public class Astronaut : MonoBehaviour {
 				SpriteDash.SetActive(false);
 			}
 
-			if (_state == AstronautState.Walking)
+			/*if (_state == AstronautState.Walking)
 			{
 				StartCoroutine(WalkingStance());
-			}
+			}*/
 		}
 	}
 
@@ -51,7 +51,6 @@ public class Astronaut : MonoBehaviour {
 	private float height = 0;
 	private float angle = 0;
 	private float walkTime = 0;
-
 	private int nextStep = 1;
 
 	// Use this for initialization
@@ -61,6 +60,15 @@ public class Astronaut : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		/*if (State == AstronautState.Walking)
+		{
+			walkTime += Time.deltaTime / StepTime;
+			Vector3 rotation = transform.rotation.eulerAngles;
+			rotation.z = Mathf.Sin(walkTime * Mathf.PI)*50;
+			transform.rotation = Quaternion.Euler(rotation);
+			Debug.Log(rotation.z);
+		}*/
 
 		/*
 		switch (State)
@@ -97,8 +105,8 @@ public class Astronaut : MonoBehaviour {
 			}
 			else
 			{
-				Debug.Log("walking");
 				State = AstronautState.Walking;
+				walkTime = 0f;
 			}
 		}
 	}
@@ -121,7 +129,7 @@ public class Astronaut : MonoBehaviour {
 			Debug.Log("Clicked the button with an image");
 	}
 
-	IEnumerator WalkingStance()
+	/*IEnumerator WalkingStance()
 	{
 		Debug.Log("walking stance");
 		walkTime += Time.deltaTime / StepTime;
@@ -133,10 +141,10 @@ public class Astronaut : MonoBehaviour {
 			yield return null;
 		}
 
-		/*walkTime = 0f;
+		walkTime = 0f;
 		if(State == AstronautState.Walking)
 		{
 			StartCoroutine("WalkingStance");
-		}*/
-	}
+		}
+	}*/
 }
