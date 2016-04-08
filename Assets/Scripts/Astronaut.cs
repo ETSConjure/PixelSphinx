@@ -63,7 +63,11 @@ public class Astronaut : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		State = AstronautState.Idle;
+	    if (!planet)
+	    {
+	        planet = FindObjectOfType<PlanetManager>();
+	    }
+	    State = AstronautState.Idle;
 		//Debug.Log(planet.GetPlanetRadius(0));
 		theta = 0;
 		height = planet.GetPlanetRadius(theta);

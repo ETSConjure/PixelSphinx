@@ -67,11 +67,11 @@ public class testRotate : MonoBehaviour {
        // var x = r * Mathf.Cos(theta * Mathf.PI / 180);
        // var y = r * Mathf.Sin(theta * Mathf.PI / 180);  // + y0 du player 
 
-        var player = GameObject.Find("CubePlayer").gameObject;
+       // var player = GameObject.Find("CubePlayer").gameObject;
 
-		Vector3 pos = planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f);
+		//Vector3 pos = planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f);
         //player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(x, y, 0 ), Time.deltaTime);
-        player.transform.position = Vector3.Lerp(player.transform.position,
-            planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f), Time.fixedDeltaTime);
+        //player.transform.position = Vector3.Lerp(player.transform.position,
+        //    planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f), Time.fixedDeltaTime);
     }
 }
