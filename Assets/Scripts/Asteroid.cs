@@ -10,8 +10,8 @@ public class Asteroid : MonoBehaviour
 	// Use this for initialization
     void Start()
     {
-        speed = Random.Range(0.1F, 2F);
-        print(speed);
+        speed = Random.Range(0.9F, 3F);
+        // print(speed);
         center = new Vector3(0, 0);
 	}
 	
@@ -26,4 +26,22 @@ public class Asteroid : MonoBehaviour
         step = speed * Time.deltaTime;
         this.transform.position = Vector3.MoveTowards(transform.position, center, step);
     }
+
+    //collider must be set as "isTrigger" in unity for this method to work
+    public void OnTriggerEnter(Collider otherCol)
+    {
+
+
+        if (otherCol.gameObject.tag == "Player")
+        {
+            //Stun the player
+        }
+        if (otherCol.gameObject.tag == "Wedge")
+        {
+            var pmgr = FindObjectOfType<PlanetManager>();
+            pmgr.PushWedge(otherCol.gameObject.transform.parent.eulerAngles.z);
+            Destroy(this.gameObject);
+        }
+    }
+
 }
