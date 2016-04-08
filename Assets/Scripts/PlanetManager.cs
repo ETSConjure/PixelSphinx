@@ -8,9 +8,9 @@ public class PlanetManager : MonoBehaviour
 
     public int NbCartiers = 10;
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
-
+    public float CartierResetRatioSpeedFactor = 1.0f;
+    public bool CartierResetRatioSpeedRandomize = false;
     public GameObject WedgePrefab = null;
-
     public List<Wedge> wedges = new List<Wedge>();
 
    
@@ -49,7 +49,34 @@ public class PlanetManager : MonoBehaviour
 
         foreach (var w in wedges)
         {
+            if (w.offset <= 1.05f && w.offset >= 0.95f)
+            {
+                w.offset = 1.0f;
+            }
+            else if (w.offset > 1.0f)
+            {
+                if (!CartierResetRatioSpeedRandomize)
+                {
+                    w.offset -= 0.005f*CartierResetRatioSpeedFactor;
+                }
+                else
+                {
+                    w.offset -= 0.005f*CartierResetRatioSpeedFactor*UnityEngine.Random.Range(0f, 2f);
+                }
+            }
+            else if (w.offset < 1.0f)
+            {
+                if (!CartierResetRatioSpeedRandomize)
+                {
+                    w.offset += 0.005f*CartierResetRatioSpeedFactor;
+                }
+                else
+                {
+                    w.offset += 0.005f*CartierResetRatioSpeedFactor*UnityEngine.Random.Range(0f, 2f);
+                }
+            }
 
+            w.sprite.transform.localScale = new Vector3(w.offset, w.offset,0.0f);
         }
 
     }
