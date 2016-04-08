@@ -181,9 +181,9 @@ public class PlanetManager : MonoBehaviour
     public Vector3 GetPlanetCoordinatesFromPlayerXY(float playerLocalX, float playerLocalY)
     {
         var theta = playerLocalX;
-        var wedgeRadius = GetPlanetRadius(playerLocalX);
+        var wedgeRadius = GetPlanetRadius(playerLocalX) + playerLocalY;
         var x = wedgeRadius * Mathf.Cos(theta * Mathf.PI / 180);
-        var y = wedgeRadius * Mathf.Sin(theta * Mathf.PI / 180) + playerLocalY;  
+        var y = wedgeRadius * Mathf.Sin(theta * Mathf.PI / 180) ;  
 
         return new Vector3(x, y, 0);
     }

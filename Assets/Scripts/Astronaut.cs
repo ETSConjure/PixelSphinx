@@ -137,7 +137,7 @@ public class Astronaut : MonoBehaviour {
 		{
 			Vector3 rotation = transform.rotation.eulerAngles;
 			rotation.z = Mathf.Sin(walkTime*Mathf.PI)*50;
-            print("rotation " + rotation);
+           // print("rotation " + rotation);
 			transform.rotation = Quaternion.Euler(rotation);
 			yield return null;
 		}
