@@ -85,6 +85,25 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &431637404 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 170392, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+  m_PrefabInternal: {fileID: 1660116367}
+--- !u!114 &431637411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 431637404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77462b2431858f84b9bc2d055c2f4d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspi: {fileID: 0}
+  WalkAnimSpeed: 0
+  WalkAnimAngle: 0
+  EjectSpinSpeed: 0
 --- !u!114 &1027139440 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11471614, guid: 198e988adacced646a19f757f6237ae1,
@@ -138,6 +157,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 158e745881137e04ca2086294f44d74c, type: 2}
   m_IsPrefabParent: 0
+--- !u!212 &1106066633 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 21220066, guid: acd71c7b2f995984d9033c9dc4e257dc,
+    type: 2}
+  m_PrefabInternal: {fileID: 1660116367}
 --- !u!1001 &1223268487
 Prefab:
   m_ObjectHideFlags: 0
@@ -296,6 +320,14 @@ Prefab:
     - target: {fileID: 13683032, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
       propertyPath: m_Radius
       value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: SpriteWalk
+      value: 
+      objectReference: {fileID: 1106066633}
+    - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: EjectSpeed
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}

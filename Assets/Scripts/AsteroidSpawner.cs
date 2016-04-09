@@ -66,7 +66,7 @@ public class AsteroidSpawner : TimerFunctionsClass
             {
                 var playerTheta = Mathf.Atan2(p.transform.position.y, p.transform.position.x); 
                 var angle = ( 360.0f + (((playerTheta * 180)) / Mathf.PI)) % 360;  ///TODO : a changer pour p.theta
-                print("angle:" + angle);
+                //print("angle:" + angle);
 
                 var AsteroidType = Mathf.RoundToInt(Mathf.Floor(UnityEngine.Random.Range(0f, 3.999f)));
 				float direction = (Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f)) * 2 - 1); 

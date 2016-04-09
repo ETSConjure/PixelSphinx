@@ -106,6 +106,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   step: 0
+  rotationSpeed: 1
+  rotationDirection: 1
+  RandomRotationSpeed: 1
+  CrashFlamesEmitter: {fileID: 120238, guid: 1a5b0b5645fa6104087fd9f96b6104b9, type: 2}
+  TrailFlamesEmitter: {fileID: 0}
 --- !u!135 &13502558
 SphereCollider:
   m_ObjectHideFlags: 1
