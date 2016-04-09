@@ -283,8 +283,8 @@ MonoBehaviour:
   SpriteWalk: {fileID: 21220066}
   SpriteDash: {fileID: 157058}
   SpriteStun: {fileID: 183028}
-  Width: 0.4
-  Height: 0.3
+  SpriteWidth: 0.4
+  SpriteHeight: 0.3
   DashTime: 0.4
   StepTime: 5
   JumpSpeed: 5

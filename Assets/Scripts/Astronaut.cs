@@ -15,6 +15,7 @@ public class Astronaut : MonoBehaviour {
     public GameObject SpriteDash;
     public GameObject SpriteStun;
 
+	public int PlayerNum;
 	public float SpriteWidth;
 	public float SpriteHeight;
     public float DashTime = 0.4f; //Temps de l'animation et rate limiting
@@ -91,7 +92,8 @@ public class Astronaut : MonoBehaviour {
 		planet.addPlayer();
 
 	    State = AstronautState.Idle;
-		theta = 0;
+		theta = PlayerNum * planet.PlayerAngle + planet.PlayerOffset;
+		//TODO Check world manager
 		height = planet.GetPlanetRadius(theta);
 		UpdatePosition();
 	}

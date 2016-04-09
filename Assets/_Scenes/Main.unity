@@ -537,6 +537,10 @@ Prefab:
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: PlayerNum
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
   m_IsPrefabParent: 0
@@ -771,6 +775,10 @@ Prefab:
       propertyPath: m_Color.b
       value: 0.09803922
       objectReference: {fileID: 0}
+    - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: PlayerNum
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
   m_IsPrefabParent: 0
@@ -876,6 +884,10 @@ Prefab:
     - target: {fileID: 21293154, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
       propertyPath: m_Color.g
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: PlayerNum
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
