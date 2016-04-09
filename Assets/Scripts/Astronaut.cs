@@ -251,9 +251,12 @@ public class Astronaut : MonoBehaviour {
     /// </summary>
     public void Stun()
     {
-        State = AstronautState.Stun;
-        StartCoroutine(StunTimeout());
-        _astronautAnimator.Stun();
+        if (State < AstronautState.Ejecting)
+        {
+            State = AstronautState.Stun;
+            StartCoroutine(StunTimeout());
+            _astronautAnimator.Stun();
+        }
     }
 
     IEnumerator StunTimeout()
@@ -262,8 +265,11 @@ public class Astronaut : MonoBehaviour {
         {
             yield return null;
         }
-        State = AstronautState.Idle;
-        _astronautAnimator.Idle();
+        if (State < AstronautState.Ejecting)
+        {
+            State = AstronautState.Idle;
+            _astronautAnimator.Idle();
+        }
     }
 
     public void OnGUI()
