@@ -61,7 +61,7 @@ public class Astronaut : MonoBehaviour {
 
 	private float theta = 0;
 	private float height = 0;
-	public float vSpeed = 0;
+    private float vSpeed = 0;
 	private bool grounded = false;
 
 	private float walkTime = 0;
