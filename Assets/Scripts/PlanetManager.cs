@@ -14,12 +14,15 @@ public class PlanetManager : MonoBehaviour
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
     public float CartierStepSize = 0.25f;
+	public float balanceValue;
+	private float disbalance = 0f;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 
     // Use this for initialization
     public void Awake () {
         TailleCartiersEnDegres =  360.0f / NbCartiers;
+		balanceValue = (CartierMaxRatio + CartierMinRatio) / 2; 
           
         for(int i = 0; i < NbCartiers; i++)
         {
@@ -39,8 +42,31 @@ public class PlanetManager : MonoBehaviour
 
     // Update is called once per frame
     public void Update () {
-	
+		
+	}
 
+	public void setColor(float val)
+	{
+		foreach (Wedge w in wedges) {
+			//w = new Color(1f, 1f - val, 1f - val);
+			w.sprite.GetComponentInChildren<SpriteRenderer>().color = new Color(1f, (1-val), (1-val));
+		}
+
+		//TODO make planet red
+		//TODO screen shake
+		//TODO controller shake?
+	}
+
+	public float GetDisbalance()
+	{
+		disbalance = 0;
+		foreach (var w in wedges)
+		{
+			var temp = Math.Abs((w.offset - balanceValue) / (CartierMaxRatio - balanceValue));
+			disbalance += temp;
+		}
+		disbalance /= NbCartiers;
+		return disbalance;
 	}
 
     public void FixedUpdate()
@@ -84,29 +110,28 @@ public class PlanetManager : MonoBehaviour
 
     public void PushWedge(float thetaPlayerX)
     {
-            var index = GetWedgeIndex(thetaPlayerX);
-            var w = wedges[index];
+        var index = GetWedgeIndex(thetaPlayerX);
+        var w = wedges[index];
 
-            w.offset = w.offset - CartierStepSize;
-            if (w.offset < CartierMinRatio)
-                w.offset = CartierMinRatio;
+        w.offset = w.offset - CartierStepSize;
+        if (w.offset < CartierMinRatio)
+            w.offset = CartierMinRatio;
+		
+		w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
 
+        //push back l'opposée
+        var indexOppose = GetWedgeOpposé(index);
+        var v = wedges[indexOppose];
 
-            w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
+        v.offset = v.offset + CartierStepSize;
+        if (v.offset > CartierMaxRatio)
+            v.offset = CartierMaxRatio;
 
-            //push back l'opposée
-            var indexOppose = GetWedgeOpposé(index);
-            var v = wedges[indexOppose];
+        v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
 
-            v.offset = v.offset + CartierStepSize;
-            if (v.offset > CartierMaxRatio)
-                v.offset = CartierMaxRatio;
-
-            v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
-
-            // call fill gauge after every hit.
-            var earthQuakeGauge = FindObjectOfType<Earthquake>();
-            earthQuakeGauge.FillGauge();
+        // call fill gauge after every hit.
+        var earthQuakeGauge = FindObjectOfType<Earthquake>();
+        earthQuakeGauge.Fill4Gauge();
     }
 
 
@@ -118,8 +143,10 @@ public class PlanetManager : MonoBehaviour
         foreach (var w in wedges)
         {
             w.offset = w.offset + CartierStepSize;
-            if (w.offset > CartierMaxRatio)
-                w.offset = CartierMaxRatio;
+			if (w.offset > CartierMaxRatio)
+			{
+				w.offset = CartierMaxRatio;
+			}
         }
     }
 
