@@ -76,14 +76,14 @@ ParticleSystem:
   randomSeed: 0
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   moveWithTransform: 1
   scalingMode: 1
   InitialModule:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -359,7 +359,7 @@ ParticleSystem:
     length: 5
     boxX: 1
     boxY: 1
-    boxZ: 1
+    boxZ: 35.55
     arc: 360
     placementMode: 0
     m_Mesh: {fileID: 0}
