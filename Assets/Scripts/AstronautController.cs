@@ -9,8 +9,8 @@ public class AstronautController : MonoBehaviour {
 
 	public int PlayerNumber;
 
-	// Use this for initialization
-	void Start()
+    // Use this for initialization
+    public void Start()
 	{
 		InputManager.Instance.PushActiveContext("Gameplay", PlayerNumber);
 		InputManager.Instance.AddCallback(PlayerNumber, HandlePlayerAxis);
@@ -49,11 +49,17 @@ public class AstronautController : MonoBehaviour {
 
 		_astronaut.Move(xValue, yValue);
 
-		if (input.Ranges.ContainsKey("Dash"))
-		{
-			if(input.Ranges["Dash"] > 0.8f)
-				_astronaut.Dash();
-		}
+
+        // le dash se fait par double jump avec un state change. 
+
+		//if (input.Ranges.ContainsKey("Dash"))
+		//{
+		//    if (input.Ranges["Dash"] > 0.8f)
+		//    {
+  //              _astronaut.Dash();
+  //          }
+		    
+		//}
 	}
 
 	private void HandlePlayerButtons(MappedInput input)

@@ -10,16 +10,15 @@ public class PlanetManager : MonoBehaviour
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
     public float CartierResetRatioSpeedFactor = 0.23f;   //Entre 0.05 et 1 ou plus   on aime que ca restore lentement, randomnly
     public bool  CartierResetRatioSpeedRandomize = true;
+    public bool  CartierResetOverTime = true;
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
     public float CartierStepSize = 0.25f;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 
-   
-
     // Use this for initialization
-    void Start () {
+    public void Awake () {
         TailleCartiersEnDegres =  360.0f / NbCartiers;
           
         for(int i = 0; i < NbCartiers; i++)
@@ -27,7 +26,6 @@ public class PlanetManager : MonoBehaviour
             float debutAngleTheta = i* TailleCartiersEnDegres;
             var w = new Wedge() {tMin = debutAngleTheta, tMax = debutAngleTheta + TailleCartiersEnDegres};
            
-
             //float angle = i * Mathf.PI * 2 / NbCartiers * 360;
             //var wedgePos = GetPlanetCoordinatesFromPlayerXY(debutAngleTheta, 0);
             // wedgePos.x -= Mathf.Cos(debutAngleTheta * Mathf.PI / 180);
@@ -37,17 +35,17 @@ public class PlanetManager : MonoBehaviour
             w.sprite = GameObject.Find(obj.name);
             wedges.Add(w);  //pushes at end.
         }
-       
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    public void Update () {
 	
 
 	}
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
+		if (!this.CartierResetOverTime) return;
         //Ramener les plateforme vers leur position initiale 0;
 
         foreach (var w in wedges)
@@ -81,39 +79,36 @@ public class PlanetManager : MonoBehaviour
 
             w.sprite.transform.localScale = new Vector3(w.offset, w.offset,1.0f);
         }
-
+		//TODO_SR For each player
     }
 
     public void PushWedge(float thetaPlayerX)
     {
-            var index = GetWedgeIndex(thetaPlayerX);
-            var w = wedges[index];
+        var index = GetWedgeIndex(thetaPlayerX);
+        var w = wedges[index];
 
-            w.offset = w.offset - CartierStepSize;
-            if (w.offset < CartierMinRatio)
-                w.offset = 0.5f;
+        w.offset = w.offset - CartierStepSize;
+        if (w.offset < CartierMinRatio)
+            w.offset = CartierMinRatio;
 
 
-            w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
+        w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
 
-            //push back l'opposée
-            var indexOppose = GetWedgeOpposé(index);
-            var v = wedges[indexOppose];
+        //push back l'opposée
+        var indexOppose = GetWedgeOpposé(index);
+        var v = wedges[indexOppose];
 
-            v.offset = v.offset + CartierStepSize;
-            if (v.offset > CartierMaxRatio)
-                v.offset = 1.5f;
+        v.offset = v.offset + CartierStepSize;
+        if (v.offset > CartierMaxRatio)
+            v.offset = CartierMaxRatio;
 
-            v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
+        v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
     }
-
 
     //public void PushWedge(float thetaPlayerX)
     //{
     //    var index = GetWedgeIndex(thetaPlayerX);
     //    var w = wedges[index];
-
-
 
     //    w.offset = w.offset - 0.5f;
     //    if (w.offset < -1.0f)
@@ -128,7 +123,6 @@ public class PlanetManager : MonoBehaviour
     //    var wedgePos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
     //    wedgePos.x -=  Mathf.Cos(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Cos(angle * Mathf.PI / 180);     
     //    wedgePos.y -=  Mathf.Sin(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Sin(angle * Mathf.PI / 180);
-
 
     //    w.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
 
@@ -150,12 +144,9 @@ public class PlanetManager : MonoBehaviour
     //    wedgePos.x -= Mathf.Cos(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Cos(angle * Mathf.PI / 180);
     //    wedgePos.y -= Mathf.Sin(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Sin(angle * Mathf.PI / 180);
 
-
     //    v.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
 
-
     //}
-
 
     /// <summary>
     /// Radius sphere est scale/2
@@ -170,24 +161,20 @@ public class PlanetManager : MonoBehaviour
     /// Radius sphere est scale/2
     /// </summary>
     /// <returns></returns>
-    public float GetPlanetRadius(float thetaPlayerX)
-    {
-        var wedge = GetWedgeFromTheta(thetaPlayerX);
-        return GetPlanetRadius() * wedge.offset;
-    }
-
-
-
+	public float GetPlanetRadius(float thetaPlayerX)
+	{
+		var wedge = GetWedgeFromTheta(thetaPlayerX);
+		return GetPlanetRadius() * wedge.offset;
+	}
     public Vector3 GetPlanetCoordinatesFromPlayerXY(float playerLocalX, float playerLocalY)
     {
         var theta = playerLocalX;
-        var wedgeRadius = GetPlanetRadius(playerLocalX);
+        var wedgeRadius = GetPlanetRadius(playerLocalX) + playerLocalY;
         var x = wedgeRadius * Mathf.Cos(theta * Mathf.PI / 180);
-        var y = wedgeRadius * Mathf.Sin(theta * Mathf.PI / 180) + playerLocalY;  
+        var y = wedgeRadius * Mathf.Sin(theta * Mathf.PI / 180) ;  
 
         return new Vector3(x, y, 0);
     }
-
 
     /// <summary>
     /// retourn le no de plateforme
@@ -209,7 +196,6 @@ public class PlanetManager : MonoBehaviour
         return (wedgeIndex + NbCartiers / 2) % (NbCartiers);
     }
 
-
     /// <summary>
     /// retourne l'objet interne
     /// </summary>
@@ -217,7 +203,7 @@ public class PlanetManager : MonoBehaviour
     /// <returns></returns>
     public Wedge GetWedgeFromTheta(float thetaPlayerX)
     {
-        return wedges[GetWedgeIndex(thetaPlayerX)];
+        return wedges[GetWedgeIndex(thetaPlayerX % 360)];
     }
 
     /// <summary>
@@ -232,5 +218,4 @@ public class PlanetManager : MonoBehaviour
         public GameObject sprite;         //sprite et collider 2D
 
     }
-
 }

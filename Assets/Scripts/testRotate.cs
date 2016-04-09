@@ -4,13 +4,12 @@ using System.Collections;
 
 public class testRotate : MonoBehaviour {
 
-
-  
     public  float fireRate = 0.2f;
     private float lastShot = 0.0f;
     private float speed = 33.2f;
+	public bool check;
 
-    void Update()
+    public void Update()
     {
         if(Input.GetKeyDown("space") || Input.GetKey("s"))
         {
@@ -41,11 +40,11 @@ public class testRotate : MonoBehaviour {
  
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
-	
-	  
- 
+
+
+
 
 
     /// <summary>
@@ -53,11 +52,11 @@ public class testRotate : MonoBehaviour {
     /// Le player se déplace de gauche a droite en x et la valeur de x représente l'angle theta
     ///           saute en y 
     /// </summary>
-    void FixedUpdate()
+    public void FixedUpdate()
     {
        
         var theta = Time.realtimeSinceStartup * speed % 360.0f; // Position X du player = angle theta
-
+		if (check) theta = 0;
 
         var planet = GameObject.Find("Planet").gameObject.GetComponent<PlanetManager>();
 
@@ -68,10 +67,11 @@ public class testRotate : MonoBehaviour {
        // var x = r * Mathf.Cos(theta * Mathf.PI / 180);
        // var y = r * Mathf.Sin(theta * Mathf.PI / 180);  // + y0 du player 
 
-        var player = GameObject.Find("CubePlayer").gameObject;
-         
+       // var player = GameObject.Find("CubePlayer").gameObject;
+
+		//Vector3 pos = planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f);
         //player.transform.position = Vector3.Lerp(player.transform.position, new Vector3(x, y, 0 ), Time.deltaTime);
-        player.transform.position = Vector3.Lerp(player.transform.position,
-            planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f), Time.fixedDeltaTime);
+        //player.transform.position = Vector3.Lerp(player.transform.position,
+        //    planet.GetPlanetCoordinatesFromPlayerXY(theta, 0f), Time.fixedDeltaTime);
     }
 }
