@@ -133,7 +133,13 @@ public class PlanetManager : MonoBehaviour
             w.timeSincePushedToMinimum = Time.time;
             w.offset = CartierMinRatio;
         }
-        
+
+        if (w.offset < wOffsetBefore)
+        {
+            var audio = w.gameObject.GetComponent<AudioSource>();
+            audio.bypassListenerEffects = true;
+            AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
+        }
 
 
         w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);

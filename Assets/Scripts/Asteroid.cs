@@ -82,7 +82,7 @@ public class Asteroid : MonoBehaviour
                 AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
 
                 var wait = new WaitForSeconds(emitter.GetComponent<ParticleSystem>().duration);
-                //Destroy(emitter);
+                //Destroy(emitter);  //doesnt play if removed.
 
             }
 
