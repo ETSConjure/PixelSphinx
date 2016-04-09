@@ -58,7 +58,13 @@ public class Earthquake : MonoBehaviour {
 		isExploding = true;
 		StartCoroutine(Explode());
 		Instantiate(ExplosionParticle);
-	    var camera = GameObject.Find("Main Camera");
+
+        var audioBoom = gameObject.GetComponent<AudioSource>();
+        audioBoom.bypassListenerEffects = true;
+        AudioSource.PlayClipAtPoint(audioBoom.clip, transform.position, audioBoom.volume);
+
+
+        var camera = GameObject.Find("Main Camera");
 	    if (camera)
 	    {
 	        var shaker = camera.GetComponent<CameraShake>();
