@@ -146,12 +146,11 @@ public class Astronaut : MonoBehaviour {
 		float radius = GetGroundRadius();
 		if (grounded = (height <= radius))
 		{
-			/*if (State == AstronautState.Dashing)
+            //Pousser la plateforme avec le dash une fois qu'on touche au sol.
+			if (State == AstronautState.Dashing)
 			{
-				planet.PushWedge(Repeat(theta,360));
-				State = AstronautState.Idle;
-				//TODO_SR Create dash impact here
-			}*/
+                planet.PushWedge(this.theta);
+            }
 
 			height = radius;
 			if (State == AstronautState.Jumping)
@@ -280,7 +279,7 @@ public class Astronaut : MonoBehaviour {
 
         
 	    lastDashTime = Time.time;
-        planet.PushWedge(this.theta);  //TODO devrait se faire juste avant d'être groundé
+        //planet.PushWedge(this.theta);  //TODO devrait se faire juste avant d'être groundé
         State = AstronautState.Dashing;
         _astronautAnimator.Dash();
 		//vSpeed = -DashSpeed;
