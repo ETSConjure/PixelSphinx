@@ -9,17 +9,24 @@ public class AstronautAnimator : MonoBehaviour {
     public float WalkAnimAngle;
     public float EjectSpinSpeed;
 
-	// Use this for initialization
-	void Start () {
+    public GameObject DustParticlesEmitter;
+    // Use this for initialization
+    protected void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	protected void Update () {
 	    
 	}
 
     public void Jump()
+    {
+        aspi.SpriteWalk.gameObject.SetActive(true);
+        aspi.SpriteDash.gameObject.SetActive(false);
+    }
+
+    public void Dash()
     {
         aspi.SpriteWalk.gameObject.SetActive(false);
         aspi.SpriteDash.gameObject.SetActive(true);
@@ -27,6 +34,7 @@ public class AstronautAnimator : MonoBehaviour {
 
     public void Land()
     {
+        
         aspi.SpriteWalk.gameObject.SetActive(true);
         aspi.SpriteDash.gameObject.SetActive(false);
     }
@@ -71,5 +79,13 @@ public class AstronautAnimator : MonoBehaviour {
             StartCoroutine(Rotate());
         }
         yield return null;
+    }
+
+    public void EmitDustParticules()
+    {
+        if (DustParticlesEmitter)
+        {
+            var emitter = (GameObject)Instantiate(DustParticlesEmitter, this.gameObject.transform.position, Quaternion.identity);
+        }
     }
 }

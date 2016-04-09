@@ -160,7 +160,8 @@ MonoBehaviour:
   aspi: {fileID: 0}
   WalkAnimSpeed: 0
   WalkAnimAngle: 0
-  EjectSpinSpeed: 0
+  EjectSpinSpeed: 80
+  DustParticlesEmitter: {fileID: 138982, guid: 6233079c5a9a756458811f283fdca112, type: 2}
 --- !u!114 &11494368
 MonoBehaviour:
   m_ObjectHideFlags: 1

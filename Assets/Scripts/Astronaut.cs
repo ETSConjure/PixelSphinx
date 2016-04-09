@@ -42,14 +42,19 @@ public class Astronaut : MonoBehaviour {
 			
 			if (oldState == AstronautState.Dashing)
             {
-                SpriteWalk.gameObject.SetActive(false);
-                SpriteDash.gameObject.SetActive(true);
+                _astronautAnimator.Land();
+                //SpriteWalk.gameObject.SetActive(false);
+                //SpriteDash.gameObject.SetActive(true);
 			}
-			else
+            //else if (_state == AstronautState.Jumping)
+            //{
+            //    _astronautAnimator.Jump();
+            //}
+		    /*else
             {
                 SpriteWalk.gameObject.SetActive(true);
                 SpriteDash.gameObject.SetActive(false);
-			}
+			}*/
             
 			/*if (_state == AstronautState.Walking)
 			{
@@ -78,7 +83,7 @@ public class Astronaut : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start()
+    protected void Start()
     {
         _astronautAnimator = GetComponent<AstronautAnimator>();
         _astronautAnimator.aspi = this;
@@ -242,20 +247,23 @@ public class Astronaut : MonoBehaviour {
 	{
         Debug.Log("Jump!");
 
-		if (State >= AstronautState.Ejecting)
-			return;
-
-        _astronautAnimator.Jump();
+	
 
 	    if (State == AstronautState.Jumping)
 	    {
 	        Dash();
-            State=AstronautState.Dashing;  //TODO relacher l'état Dashing
+            //State=AstronautState.Dashing;  //TODO relacher l'état Dashing
 	        return;
 
 	    }
+        else if (State >= AstronautState.Dashing)
+            return;
+        else if (State >= AstronautState.Ejecting)
+            return;
 
-	    if (!grounded) return;
+        _astronautAnimator.Jump();  // deja dans le property get/set
+
+        if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
 		State = AstronautState.Jumping;
@@ -270,10 +278,11 @@ public class Astronaut : MonoBehaviour {
         if (State >= AstronautState.Ejecting)
 		    return;
 
+        
 	    lastDashTime = Time.time;
-        planet.PushWedge(this.theta);
-
-		//State = AstronautState.Dashing;
+        planet.PushWedge(this.theta);  //TODO devrait se faire juste avant d'être groundé
+        State = AstronautState.Dashing;
+        _astronautAnimator.Dash();
 		//vSpeed = -DashSpeed;
 	}
 
@@ -281,6 +290,7 @@ public class Astronaut : MonoBehaviour {
 	{
 		State = AstronautState.Ejecting;
 		vSpeed = EjectSpeed;
+	    _astronautAnimator.Eject();
 		grounded = false;
 	}
 
