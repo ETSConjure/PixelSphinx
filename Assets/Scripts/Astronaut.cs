@@ -46,7 +46,8 @@ public class Astronaut : MonoBehaviour {
 			
 			if (oldState == AstronautState.Dashing)
             {
-                _astronautAnimator.Idle();
+                _astronautAnimator.Land();
+                //_astronautAnimator.Idle();
 			}
             else if (State == AstronautState.Walking)
 			{
@@ -148,6 +149,7 @@ public class Astronaut : MonoBehaviour {
 			if (State == AstronautState.Dashing)
 			{
                 planet.PushWedge(this.theta);
+                
                 State = AstronautState.Idle;
             }
 
