@@ -200,7 +200,7 @@ MonoBehaviour:
   rotationSpeed: 1
   rotationDirection: 1
   RandomRotationSpeed: 1
-  CrashFlamesEmitter: {fileID: 120238, guid: 1a5b0b5645fa6104087fd9f96b6104b9, type: 2}
+  CrashFlamesEmitter: {fileID: 105122, guid: a3879b7846092334e88b712c1b5a4edf, type: 2}
   TrailFlamesEmitter: {fileID: 0}
 --- !u!135 &13502558
 SphereCollider:

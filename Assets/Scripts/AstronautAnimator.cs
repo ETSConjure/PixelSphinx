@@ -9,6 +9,9 @@ public class AstronautAnimator : MonoBehaviour {
     public float WalkAnimAngle;
     public float EjectSpinSpeed;
 
+    private GameObject runninParticleEmitter;
+
+    public GameObject DashParticleSystem;
     public GameObject DustParticlesEmitter;
     // Use this for initialization
     protected void Start () {
@@ -36,10 +39,24 @@ public class AstronautAnimator : MonoBehaviour {
 
     public void Idle()
     {
+
         aspi.SpriteWalk.gameObject.SetActive(true);
         aspi.SpriteDash.gameObject.SetActive(false);
         aspi.SpriteStun.gameObject.SetActive(false);
+	}
+
+    public void Land()
+    {
+        //from dash state
+        runninParticleEmitter = (GameObject)Instantiate(DashParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+        runninParticleEmitter.transform.Rotate(0,180f,0.0f);
+       
+        Destroy(runninParticleEmitter, runninParticleEmitter.GetComponent<ParticleSystem>().duration);
+		Idle();
+
+
     }
+     
 
     public void Walk(bool right)
     {
@@ -92,6 +109,7 @@ public class AstronautAnimator : MonoBehaviour {
             StartCoroutine(Rotate(-side));
         }
     }
+     
 
     public void EmitDustParticules()
     {

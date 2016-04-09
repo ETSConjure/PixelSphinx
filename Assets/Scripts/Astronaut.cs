@@ -23,6 +23,7 @@ public class Astronaut : MonoBehaviour {
 	public float Gravity;
 	public float Speed;
 	public float EjectSpeed;
+
 	//public float DashSpeed;
 
 	public PlanetManager planet;
@@ -130,7 +131,7 @@ public class Astronaut : MonoBehaviour {
 			if (State != AstronautState.Ejecting)
 				vSpeed -= Gravity * delta;
 			else
-				vSpeed *= 0.98f;
+				vSpeed *= 0.99f;
 		}
 
 		float radius = GetGroundRadius();
