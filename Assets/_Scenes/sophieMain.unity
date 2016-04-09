@@ -208,25 +208,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e86e27c7b6d9c824cb76115e90a15cac, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1408525986 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 170392, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-  m_PrefabInternal: {fileID: 1660116367}
---- !u!114 &1408525987
+--- !u!114 &1408525992 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1408525986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77462b2431858f84b9bc2d055c2f4d45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aspi: {fileID: 0}
-  WalkAnimSpeed: 0
-  WalkAnimAngle: 0
-  EjectSpinSpeed: 0
+  m_PrefabParentObject: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc,
+    type: 2}
+  m_PrefabInternal: {fileID: 1660116367}
+  m_Script: {fileID: 11500000, guid: 8c32c40e0b8e5eb47bb7a91068af09ca, type: 3}
 --- !u!1001 &1469146136
 Prefab:
   m_ObjectHideFlags: 0
@@ -344,34 +331,18 @@ Prefab:
       propertyPath: m_Name
       value: Astronaut_1
       objectReference: {fileID: 0}
-    - target: {fileID: 5402556, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_AngularDrag
-      value: 0
+    - target: {fileID: 11491252, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: WalkAnimSpeed
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 5402556, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
+    - target: {fileID: 11491252, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: WalkAnimAngle
+      value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 5402556, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402556, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 13683032, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_Center.y
-      value: 1.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 13683032, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_Height
-      value: 1.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 13683032, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: m_Radius
-      value: 0.76
-      objectReference: {fileID: 0}
+    - target: {fileID: 11491252, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: aspi
+      value: 
+      objectReference: {fileID: 1408525992}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
   m_IsPrefabParent: 0
