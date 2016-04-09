@@ -9,6 +9,7 @@ public class Asteroid : MonoBehaviour
     public float rotationSpeed = 1.0f;
     public float rotationDirection = 1.0f;
     public bool  RandomRotationSpeed = true;
+   // private AudioSource audio;
 
     public GameObject CrashFlamesEmitter;  //Emitter on impact
 
@@ -17,6 +18,7 @@ public class Asteroid : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
+        //audio = gameObject.GetComponent<AudioSource>();
         speed = Random.Range(1.8F, 3F);
         center = new Vector3(0, 0);
 		
@@ -74,9 +76,12 @@ public class Asteroid : MonoBehaviour
                 //emitter.transform.Rotate(0,90.0f,angleImpact);
                 emitter.transform.localRotation = Quaternion.Euler(0, 180.0f, angleImpact);
 
-            
 
-                //var wtf = new WaitForSeconds(emitter.GetComponent<ParticleSystem>().duration);
+                var audio = GetComponent<AudioSource>();
+                audio.bypassListenerEffects = true;
+                AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
+
+                var wait = new WaitForSeconds(emitter.GetComponent<ParticleSystem>().duration);
                 //Destroy(emitter);
 
             }
