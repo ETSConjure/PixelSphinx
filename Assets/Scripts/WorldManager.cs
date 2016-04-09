@@ -10,5 +10,5 @@ public class WorldManager
 	}
 	private WorldManager() { }
 
-	public bool[] PlayersActive = { false, false, false, false };
+	public bool[] PlayersActive = { true, true, false, false };
 }
