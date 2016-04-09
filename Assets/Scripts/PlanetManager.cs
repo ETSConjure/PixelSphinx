@@ -14,6 +14,7 @@ public class PlanetManager : MonoBehaviour
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
     public float CartierStepSize = 0.25f;
+    public float CartierWaitBeforeRaise = 0.6f;
 	public float balanceValue;
 	private float disbalance = 0f;
     public GameObject WedgePrefab = null;
@@ -89,10 +90,10 @@ public class PlanetManager : MonoBehaviour
                 }
                 else
                 {
-                    w.offset -= 0.005f*CartierResetRatioSpeedFactor * UnityEngine.Random.Range(-0.5f, 2f);
+                    w.offset -= 0.005f*CartierResetRatioSpeedFactor * UnityEngine.Random.Range(-0.5f, 1.8f);
                 }
             }
-            else if (w.offset < 1.0f)
+            else if ((w.offset < 1.0f)  && Time.time >= w.timeSincePushedToMinimum + CartierWaitBeforeRaise )
             {
                 if (!CartierResetRatioSpeedRandomize)
                 {
@@ -114,9 +115,17 @@ public class PlanetManager : MonoBehaviour
         var index = GetWedgeIndex(thetaPlayerX);
         var w = wedges[index];
 
+
+        var difference = CartierStepSize;
+
         w.offset = w.offset - CartierStepSize;
-        if (w.offset < CartierMinRatio)
+        if (w.offset <= CartierMinRatio)
+        {
+            difference -= CartierMinRatio - w.offset; //enlever du push pour la plateforme qui va faire pousser dans le sens opposé
+            w.timeSincePushedToMinimum = Time.time;
             w.offset = CartierMinRatio;
+        }
+        
 
 
         w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
@@ -125,7 +134,7 @@ public class PlanetManager : MonoBehaviour
         var indexOppose = GetWedgeOpposé(index);
         var v = wedges[indexOppose];
 
-        v.offset = v.offset + CartierStepSize;
+        v.offset = v.offset + difference;  //CartierStepSize; //diférentiel au lieu du step size
         if (v.offset >= CartierMaxRatio)
         {
             v.offset = CartierMaxRatio;
@@ -289,7 +298,7 @@ public class PlanetManager : MonoBehaviour
         public float offset = 1.0f;  //valeurs entre minRatio et maxRatio; < 1 étant renfoncé, 1 position normale, et > 1 vers l'extérieur
         public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
         public float tMax = 0;
-
+        public float timeSincePushedToMinimum = 0.0f;
         public GameObject sprite;         //sprite et collider 2D
         public GameObject gameObject;    //wedge prefab avec collider
     }
