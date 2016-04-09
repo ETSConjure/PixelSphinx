@@ -265,7 +265,8 @@ public class PlanetManager : MonoBehaviour
     /// <returns></returns>
     public Wedge GetWedgeFromTheta(float thetaPlayerX)
     {
-        return wedges[GetWedgeIndex(thetaPlayerX % 360)];
+		print(GetWedgeIndex((thetaPlayerX)%360));
+        return wedges[GetWedgeIndex((thetaPlayerX) % 360)];
     }
 
     /// <summary>

@@ -90,7 +90,6 @@ public class Astronaut : MonoBehaviour {
 	    }
 
 	    State = AstronautState.Idle;
-		//Debug.Log(planet.GetPlanetRadius(0));
 		theta = 0;
 		height = planet.GetPlanetRadius(theta);
 		UpdatePosition();

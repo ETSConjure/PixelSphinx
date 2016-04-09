@@ -46,7 +46,7 @@ public class Earthquake : MonoBehaviour {
     /// <summary>
     /// à être Appelé à chaque fois qu'on enfonce un plateau, le gage se remplis plus vite. (et par le temps)
     /// </summary>
-    public void Fill4Gauge()
+    public void FillGauge()
     {
 
         /*if (gaugeLevel < gaugeMax)
