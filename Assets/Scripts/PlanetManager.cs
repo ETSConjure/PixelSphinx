@@ -44,6 +44,30 @@ public class PlanetManager : MonoBehaviour
             w.gameObject = (GameObject)obj;
             wedges.Add(w);  //pushes at end.
         }
+
+        var worldMgr = WorldManager.Instance;
+
+
+
+        if (!worldMgr.PlayersActive[0])
+        {
+            Destroy(GameObject.Find("Astronaut_0"));
+        }
+        if (!worldMgr.PlayersActive[1])
+        {
+            Destroy(GameObject.Find("Astronaut_1"));
+        }
+        if (!worldMgr.PlayersActive[2])
+        {
+            Destroy(GameObject.Find("Astronaut_2"));
+        }
+        if (!worldMgr.PlayersActive[3])
+        {
+            Destroy(GameObject.Find("Astronaut_3"));
+        }
+
+
+
     }
 
     // Update is called once per frame
