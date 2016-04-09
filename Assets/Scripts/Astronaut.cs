@@ -228,9 +228,13 @@ public class Astronaut : MonoBehaviour {
 
 	public void Jump()
 	{
+        Debug.Log("Jump!");
+
 		if (State >= AstronautState.Ejecting)
 			return;
+
         _astronautAnimator.Jump();
+
 	    if (State == AstronautState.Jumping)
 	    {
 	        Dash();
@@ -238,6 +242,7 @@ public class Astronaut : MonoBehaviour {
 	        return;
 
 	    }
+
 	    if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
