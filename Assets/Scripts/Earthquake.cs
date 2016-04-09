@@ -58,6 +58,12 @@ public class Earthquake : MonoBehaviour {
 		isExploding = true;
 		StartCoroutine(Explode());
 		Instantiate(ExplosionParticle);
+	    var camera = GameObject.Find("Main Camera");
+	    if (camera)
+	    {
+	        var shaker = camera.GetComponent<CameraShake>();
+	        if (shaker) shaker.shakeTimeAmount = 2.0f;
+	    }
 	}
 
 	IEnumerator Explode()
