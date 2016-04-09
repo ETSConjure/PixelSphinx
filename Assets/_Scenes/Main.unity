@@ -383,6 +383,14 @@ Prefab:
       propertyPath: gaugeMax
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 11401034, guid: 198e988adacced646a19f757f6237ae1, type: 2}
+      propertyPath: CriticalMin
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11401034, guid: 198e988adacced646a19f757f6237ae1, type: 2}
+      propertyPath: CriticalMax
+      value: 0.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 198e988adacced646a19f757f6237ae1, type: 2}
   m_IsPrefabParent: 0
@@ -433,9 +441,17 @@ Prefab:
       propertyPath: m_Name
       value: Astronaut_1
       objectReference: {fileID: 0}
-    - target: {fileID: 11434752, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: PlayerNumber
-      value: 1
+    - target: {fileID: 11491252, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: WalkAnimSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491252, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: WalkAnimAngle
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11491252, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: EjectSpinSpeed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
