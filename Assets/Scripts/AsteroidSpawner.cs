@@ -46,8 +46,8 @@ public class AsteroidSpawner : TimerFunctionsClass
         if (!GenerationVersLesjoueurs)
         {
             // Random entre 10 et 20, * 1 ou -1
-            var x = UnityEngine.Random.Range(10.0f, 20.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
-            var y = UnityEngine.Random.Range(10.0f, 20.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
+            var x = UnityEngine.Random.Range(30.0f, 40.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
+            var y = UnityEngine.Random.Range(20.0f, 30.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
 
 
             //0-3
@@ -78,7 +78,7 @@ public class AsteroidSpawner : TimerFunctionsClass
 				float direction = (Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f)) * 2 - 1); 
 		
                 Instantiate(AsteroidPrefabTypes[AsteroidType], 
-                            direction*planet.GetPlanetCoordinatesFromPlayerXY(angle, UnityEngine.Random.Range(10f,15f)), 
+                            direction*planet.GetPlanetCoordinatesFromPlayerXY(angle, UnityEngine.Random.Range(25f,35f)), 
                             Quaternion.identity);
             }
 

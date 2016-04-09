@@ -9,6 +9,9 @@ public class AstronautAnimator : MonoBehaviour {
     public float WalkAnimAngle;
     public float EjectSpinSpeed;
 
+    private GameObject runninParticleEmitter;
+    public GameObject DashImpactSound;
+    public GameObject DashParticleSystem;
     public GameObject DustParticlesEmitter;
     // Use this for initialization
     protected void Start () {
@@ -24,24 +27,43 @@ public class AstronautAnimator : MonoBehaviour {
     {
         aspi.SpriteWalk.gameObject.SetActive(true);
         aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
 
     public void Dash()
     {
         aspi.SpriteWalk.gameObject.SetActive(false);
         aspi.SpriteDash.gameObject.SetActive(true);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
+
+    public void Idle()
+    {
+
+        aspi.SpriteWalk.gameObject.SetActive(true);
+        aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(false);
+	}
 
     public void Land()
     {
-        
-        aspi.SpriteWalk.gameObject.SetActive(true);
-        aspi.SpriteDash.gameObject.SetActive(false);
+        //from dash state
+        runninParticleEmitter = (GameObject)Instantiate(DashParticleSystem, this.gameObject.transform.position, Quaternion.identity);
+        runninParticleEmitter.transform.Rotate(0,180f,0.0f);
+       
+        Destroy(runninParticleEmitter, runninParticleEmitter.GetComponent<ParticleSystem>().duration);
+		Idle();
+
+        var impactAudio = DashImpactSound.GetComponent<AudioSource>();
+        impactAudio.bypassListenerEffects = true;
+        AudioSource.PlayClipAtPoint(impactAudio.clip, transform.position, impactAudio.volume);
+
+
     }
+     
 
     public void Walk(bool right)
     {
-        Debug.Log("Walking!");
         StartCoroutine(Rotate(right? -1 : 1));
     }
 
@@ -51,6 +73,14 @@ public class AstronautAnimator : MonoBehaviour {
         var audio = aspi.GetComponent<AudioSource>();  //eject sound
         audio.bypassListenerEffects = true;
         AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
+        Stun();
+    }
+
+    public void Stun()
+    {
+        aspi.SpriteWalk.gameObject.SetActive(false);
+        aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(true);
     }
 
     IEnumerator Spin()
@@ -80,13 +110,10 @@ public class AstronautAnimator : MonoBehaviour {
 
         if (aspi.State == Astronaut.AstronautState.Walking)
         {
-            Debug.Log("Walking again");
             StartCoroutine(Rotate(-side));
         }
-        else
-            Debug.Log("Walking stop");
-        //yield return null;
     }
+     
 
     public void EmitDustParticules()
     {
