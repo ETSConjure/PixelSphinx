@@ -122,6 +122,7 @@ public class Astronaut : MonoBehaviour {
 
 	private float Repeat(float num, float limit)
 	{
+        //This is a modulus
 		return Mathf.Repeat(num + limit, limit);
 	}
 
@@ -196,12 +197,30 @@ public class Astronaut : MonoBehaviour {
 
 	public void Move(float x, float y)
 	{
+        Vector3 pos = transform.position;
+        pos.z = 0;
+
+        float playerX, playerY;
+        PlanetUtilities.Spheric2Cartesian(theta, height, out playerX, out playerY);
+
+        Debug.Log(theta);
+        //Vector3 v = 
+
+        Vector3 dirV = Vector3.Cross(pos, Vector3.up).normalized;
+        float proj = Vector3.Dot(new Vector3(x, y, 0), dirV);
+        //Debug.Log(proj / Time.deltaTime);
+
+        Debug.Log(dirV);
+
+        //float move = proj / Time.deltaTime; //Mathf.Abs(proj) < 0.1 ? 0 : proj;
+        float move = x;
+
 		if (State >= AstronautState.Ejecting )
 			return;
 
 		if (State < AstronautState.Jumping)
 		{
-			if (Mathf.Approximately(x, 0))
+			if (Mathf.Approximately(move, 0))
 			{
 				State = AstronautState.Idle;
 			}
@@ -214,9 +233,9 @@ public class Astronaut : MonoBehaviour {
 
 		if (State < AstronautState.Dashing)
 		{
-			if (-0.2 < x && x < 0.2) return;
+			if (-0.2 < move && move < 0.2) return;
 			//Debug.Log(x + "   " + Speed + "   " + height);
-			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -x, height) * Time.deltaTime;
+			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
 			//Debug.Log("Moving! - " + height);
 			//Debug.Log("Daaa - " + movement);
 			float newTheta = (360 + theta + movement) % 360; // angle positif
