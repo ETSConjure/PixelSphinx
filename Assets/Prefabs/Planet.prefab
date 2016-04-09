@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11fa6fea03561044843359e6d9d23a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CriticalMin: 0.2
+  CriticalMax: 0.9
 --- !u!114 &11401780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -139,6 +141,8 @@ MonoBehaviour:
   CartierMinRatio: 0.75
   CartierMaxRatio: 1.25
   CartierStepSize: 0.25
+  CartierWaitBeforeRaise: 0.6
+  balanceValue: 0
   WedgePrefab: {fileID: 170328, guid: 0b78da08dfa398840862539a74cc2377, type: 2}
 --- !u!135 &13593906
 SphereCollider:

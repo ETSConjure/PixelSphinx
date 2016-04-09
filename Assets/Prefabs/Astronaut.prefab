@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab270b0cb2475114ab8eb45661af0df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNumber: 1
+  PlayerNumber: 0
 --- !u!114 &11491252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aspi: {fileID: 0}
-  WalkAnimSpeed: 0
-  WalkAnimAngle: 0
+  WalkAnimSpeed: 4
+  WalkAnimAngle: 15
   EjectSpinSpeed: 80
   DustParticlesEmitter: {fileID: 138982, guid: 6233079c5a9a756458811f283fdca112, type: 2}
 --- !u!114 &11494368

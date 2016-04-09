@@ -56,11 +56,10 @@ public class Astronaut : MonoBehaviour {
                 SpriteDash.gameObject.SetActive(false);
 			}*/
             
-			/*if (_state == AstronautState.Walking)
+			if (State == AstronautState.Walking)
 			{
-				//StartCoroutine(WalkingStance());
-                _astronautAnimator.Walk();
-			}*/
+                _astronautAnimator.Walk(walkRight);
+			}
 		}
 	}
 
@@ -68,6 +67,7 @@ public class Astronaut : MonoBehaviour {
 	private float height = 0;
     private float vSpeed = 0;
 	private bool grounded = false;
+    private bool walkRight = false;
 
 	private float walkTime = 0;
 	private int nextStep = 1;
@@ -127,6 +127,7 @@ public class Astronaut : MonoBehaviour {
 
 	private float Repeat(float num, float limit)
 	{
+        //This is a modulus
 		return Mathf.Repeat(num + limit, limit);
 	}
 
@@ -200,17 +201,28 @@ public class Astronaut : MonoBehaviour {
 
 	public void Move(float x, float y)
 	{
+        float playerX, playerY;
+        PlanetUtilities.Spheric2Cartesian(theta - 108, height, out playerX, out playerY);
+
+        Vector3 pos = new Vector3(playerX, playerY);
+
+        Vector3 dirV = Vector3.Cross(pos, Vector3.forward).normalized;
+        float proj = Vector3.Dot(new Vector3(x, y, 0), dirV);
+
+        float move = proj;
+
 		if (State >= AstronautState.Ejecting )
 			return;
 
 		if (State < AstronautState.Jumping)
 		{
-			if (Mathf.Approximately(x, 0))
+			if (Mathf.Approximately(move, 0))
 			{
 				State = AstronautState.Idle;
 			}
 			else
 			{
+                walkRight = move > 0;
 				State = AstronautState.Walking;
 				walkTime = 0f;
 			}
@@ -218,17 +230,16 @@ public class Astronaut : MonoBehaviour {
 
 		if (State < AstronautState.Dashing)
 		{
-			if (-0.2 < x && x < 0.2) return;
-			//Debug.Log(x + "   " + Speed + "   " + height);
-			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -x, height) * Time.deltaTime;
-			//Debug.Log("Moving! - " + height);
-			//Debug.Log("Daaa - " + movement);
-			float newTheta = (360 + theta + movement) % 360; // angle positif
+			if (-0.2 < move && move < 0.2) return;
+
+			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
+
+			float newTheta = Repeat(theta + movement, 360);
 
 			float newHeight = GetGroundRadius(newTheta);
 			if (newHeight > height)
 			{
-				Debug.Log("Blocked by wall");
+				//Debug.Log("Blocked by wall");
 				return; // Blocked by wall
 			}
 
@@ -239,15 +250,10 @@ public class Astronaut : MonoBehaviour {
             //TODO arreter mouvement lateral
             State=AstronautState.Idle;
 	    }
-        
 	}
 
 	public void Jump()
 	{
-        Debug.Log("Jump!");
-
-	
-
 	    if (State == AstronautState.Jumping)
 	    {
 	        Dash();
@@ -260,9 +266,10 @@ public class Astronaut : MonoBehaviour {
         else if (State >= AstronautState.Ejecting)
             return;
 
+        if (!grounded) return;
+
         _astronautAnimator.Jump();  // deja dans le property get/set
 
-        if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
 		State = AstronautState.Jumping;
@@ -308,7 +315,14 @@ public class Astronaut : MonoBehaviour {
 		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
 		{
 			Debug.Log("Clicked the button with an image");
-			Eject();
-		}
+            //_astronautAnimator.Walk();
+			//Eject();
+        }
+       /* if (GUI.Button(new Rect(60, 10, 150, 50), "Stop"))
+        {
+            Debug.Log("Clicked the button with an image");
+            _astronautAnimator.StopWalk();
+            //Eject();
+        }*/
 	}
 }

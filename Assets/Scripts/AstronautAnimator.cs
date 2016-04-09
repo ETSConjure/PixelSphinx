@@ -39,9 +39,10 @@ public class AstronautAnimator : MonoBehaviour {
         aspi.SpriteDash.gameObject.SetActive(false);
     }
 
-    public void Walk()
+    public void Walk(bool right)
     {
-        StartCoroutine(Rotate());
+        Debug.Log("Walking!");
+        StartCoroutine(Rotate(right? -1 : 1));
     }
 
     public void Eject()
@@ -58,9 +59,9 @@ public class AstronautAnimator : MonoBehaviour {
         }
     }
 
-    IEnumerator Rotate()
+    IEnumerator Rotate(float side)
     {
-        for (float i = 0.5f; i < 2.5f; i+= Time.deltaTime*WalkAnimSpeed)
+        for (float i = 0.5f; i < 1.5f; i+= Time.deltaTime*WalkAnimSpeed)
         {
             /*int roundDown = 10;
             //0.5, 1.5 et 2.5
@@ -70,15 +71,18 @@ public class AstronautAnimator : MonoBehaviour {
                 aspi.SpriteWalk.flipX = !aspi.SpriteWalk.flipX;
             }*/
             float position = Mathf.PingPong(i, 1f);
-            transform.rotation = Quaternion.Euler(0, 0, (position - 0.5f) * WalkAnimAngle * 2);
+            transform.localRotation = Quaternion.Euler(0, 0, side * (position - 0.5f) * WalkAnimAngle * 2);
             yield return null;
         }
 
         if (aspi.State == Astronaut.AstronautState.Walking)
         {
-            StartCoroutine(Rotate());
+            Debug.Log("Walking again");
+            StartCoroutine(Rotate(-side));
         }
-        yield return null;
+        else
+            Debug.Log("Walking stop");
+        //yield return null;
     }
 
     public void EmitDustParticules()
