@@ -89,12 +89,6 @@ NavMeshSettings:
 GameObject:
   m_PrefabParentObject: {fileID: 170392, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
   m_PrefabInternal: {fileID: 1660116367}
---- !u!114 &431637410 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc,
-    type: 2}
-  m_PrefabInternal: {fileID: 1660116367}
-  m_Script: {fileID: 11500000, guid: 8c32c40e0b8e5eb47bb7a91068af09ca, type: 3}
 --- !u!114 &431637411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,10 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77462b2431858f84b9bc2d055c2f4d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspi: {fileID: 431637410}
-  WalkAnimSpeed: 3
-  WalkAnimAngle: 20
-  EjectSpinSpeed: 5
+  aspi: {fileID: 0}
+  WalkAnimSpeed: 0
+  WalkAnimAngle: 0
+  EjectSpinSpeed: 0
 --- !u!114 &1027139440 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11471614, guid: 198e988adacced646a19f757f6237ae1,

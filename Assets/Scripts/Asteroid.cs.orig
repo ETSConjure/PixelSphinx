@@ -61,7 +61,7 @@ public class Asteroid : MonoBehaviour
 
             if (CrashFlamesEmitter)
             {
-                //Instantiate(CrashFlamesEmitter, this.transform.position, this.transform.forward);
+                Instantiate(CrashFlamesEmitter, this.transform.position, this.transform.forward);
             }
 
 
