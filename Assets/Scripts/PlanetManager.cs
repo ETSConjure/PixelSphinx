@@ -12,7 +12,7 @@ public class PlanetManager : MonoBehaviour
     public bool  CartierResetRatioSpeedRandomize = true;
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
-    public float CartierStepSize = 0.25;
+    public float CartierStepSize = 0.25f;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 

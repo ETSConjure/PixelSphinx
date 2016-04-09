@@ -1,22 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AstronautAnimator))]
 public class Astronaut : MonoBehaviour {
 
-	private enum AstronautState
+    private AstronautAnimator _astronautAnimator;
+	public enum AstronautState
 	{
 		Idle, Walking, Jumping, Dashing, Ejecting, Dead
 	}
 
 	public GameObject Rotator;
-	public GameObject SpriteWalk;
+	public SpriteRenderer SpriteWalk;
 	public GameObject SpriteDash;
 
 	public float StepTime;
 	public float JumpSpeed;
 
 	private AstronautState _state;
-	private AstronautState State
+	public AstronautState State
 	{
 		get
 		{
@@ -30,19 +32,20 @@ public class Astronaut : MonoBehaviour {
 			if (oldState == _state) return;
 			
 			if (oldState == AstronautState.Dashing)
-			{
-				SpriteWalk.SetActive(false);
-				SpriteDash.SetActive(true);
+            {
+                SpriteWalk.gameObject.SetActive(true);
+                SpriteDash.gameObject.SetActive(false);
 			}
 			else
-			{
-				SpriteWalk.SetActive(true);
-				SpriteDash.SetActive(false);
+            {
+                SpriteWalk.gameObject.SetActive(true);
+                SpriteDash.gameObject.SetActive(false);
 			}
-
+            
 			if (_state == AstronautState.Walking)
 			{
-				StartCoroutine(WalkingStance());
+				//StartCoroutine(WalkingStance());
+                _astronautAnimator.Walk();
 			}
 		}
 	}
@@ -54,7 +57,10 @@ public class Astronaut : MonoBehaviour {
 	private int nextStep = 1;
 
 	// Use this for initialization
-	void Start () {
+    void Start()
+    {
+        _astronautAnimator = GetComponent<AstronautAnimator>();
+        _astronautAnimator.aspi = this;
 		State = AstronautState.Idle;
 	}
 	
@@ -115,6 +121,7 @@ public class Astronaut : MonoBehaviour {
 	{
 		if (_state >= AstronautState.Ejecting)
 			return;
+        _astronautAnimator.Jump();
 	}
 
 	public void Dash()
@@ -125,10 +132,32 @@ public class Astronaut : MonoBehaviour {
 
 	public void OnGUI()
 	{
-		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
-			Debug.Log("Clicked the button with an image");
-	}
+        if (GUI.Button(new Rect(10, 10, 150, 50), "Jump"))
+        {
+            Debug.Log("Clicked the button with an image");
+             _astronautAnimator.Jump();
+        }
 
+        if (GUI.Button(new Rect(10, 70, 150, 50), "Land"))
+        {
+            Debug.Log("Clicked the 2nd button");
+            _astronautAnimator.Land();
+        }
+
+        if (GUI.Button(new Rect(10, 130, 150, 50), "Walk"))
+        {
+            Debug.Log("Clicked the 3rd button");
+            State = AstronautState.Walking;
+            _astronautAnimator.Walk();
+        }
+
+        if (GUI.Button(new Rect(10, 190, 150, 50), "Eject"))
+        {
+            Debug.Log("Clicked the 4th button");
+            _astronautAnimator.Eject();
+        }
+	}
+    /*
 	IEnumerator WalkingStance()
 	{
 		Debug.Log("walking stance");
@@ -137,7 +166,7 @@ public class Astronaut : MonoBehaviour {
 		{
 			Vector3 rotation = transform.rotation.eulerAngles;
 			rotation.z = Mathf.Sin(walkTime*Mathf.PI)*50;
-            print("rotation " + rotation);
+            //print("rotation " + rotation);
 			transform.rotation = Quaternion.Euler(rotation);
 			yield return null;
 		}
@@ -147,5 +176,5 @@ public class Astronaut : MonoBehaviour {
 		{
 			StartCoroutine("WalkingStance");
 		}
-	}
+	}*/
 }
