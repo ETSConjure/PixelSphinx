@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class Earthquake : MonoBehaviour {
     int gaugeLevel;
-    const int gaugeMax=100;
+    public int gaugeMax=100;
 
 	// Use this for initialization
     public void Start()
@@ -50,6 +51,11 @@ public class Earthquake : MonoBehaviour {
         }
         else
         {
+
+            var planet = FindObjectOfType<PlanetManager>();
+
+            planet.CallEarthQuake();
+
             gaugeLevel = 0;
             
         }

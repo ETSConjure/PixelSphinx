@@ -103,8 +103,25 @@ public class PlanetManager : MonoBehaviour
                 v.offset = CartierMaxRatio;
 
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
+
+            // call fill gauge after every hit.
+            var earthQuakeGauge = FindObjectOfType<Earthquake>();
+            earthQuakeGauge.FillGauge();
     }
 
+
+    /// <summary>
+    /// On a earthquake, everything expands by a step
+    /// </summary>
+    public void CallEarthQuake()
+    {
+        foreach (var w in wedges)
+        {
+            w.offset = w.offset + CartierStepSize;
+            if (w.offset > CartierMaxRatio)
+                w.offset = CartierMaxRatio;
+        }
+    }
 
     //public void PushWedge(float thetaPlayerX)
     //{
