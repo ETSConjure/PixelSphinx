@@ -12,7 +12,8 @@ public class Astronaut : MonoBehaviour {
 
 	public GameObject Rotator;
 	public SpriteRenderer SpriteWalk;
-	public GameObject SpriteDash;
+    public GameObject SpriteDash;
+    public GameObject SpriteStun;
 
 	public float Width;
     public float DashTime = 0.4f; //Temps de l'animation et rate limiting
@@ -42,10 +43,9 @@ public class Astronaut : MonoBehaviour {
 			
 			if (oldState == AstronautState.Dashing)
             {
-                _astronautAnimator.Land();
+                _astronautAnimator.Idle();
 			}
-            
-			if (State == AstronautState.Walking)
+            else if (State == AstronautState.Walking)
 			{
                 _astronautAnimator.Walk(walkRight);
 			}
@@ -155,6 +155,9 @@ public class Astronaut : MonoBehaviour {
 
 	public void Move(float x, float y)
 	{
+		if (State >= AstronautState.Dashing )
+			return;
+
         float playerX, playerY;
         PlanetUtilities.Spheric2Cartesian(theta - 108, height, out playerX, out playerY);
 
@@ -164,9 +167,6 @@ public class Astronaut : MonoBehaviour {
         float proj = Vector3.Dot(new Vector3(x, y, 0), dirV);
 
         float move = proj;
-
-		if (State >= AstronautState.Dashing )
-			return;
 
 		if (State < AstronautState.Jumping)
 		{
@@ -182,28 +182,20 @@ public class Astronaut : MonoBehaviour {
 			}
 		}
 
-		if (State < AstronautState.Dashing)
+		if (-0.2 < move && move < 0.2) return;
+
+		float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
+
+		float newTheta = Repeat(theta + movement, 360);
+
+		float newHeight = GetGroundRadius(newTheta);
+		if (newHeight > height)
 		{
-			if (-0.2 < move && move < 0.2) return;
-
-			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
-
-			float newTheta = Repeat(theta + movement, 360);
-
-			float newHeight = GetGroundRadius(newTheta);
-			if (newHeight > height)
-			{
-				//Debug.Log("Blocked by wall");
-				return; // Blocked by wall
-			}
-
-			theta = newTheta;
+			//Debug.Log("Blocked by wall");
+			return; // Blocked by wall
 		}
-	    if (State == AstronautState.Dashing && grounded)
-	    {
-            //TODO arreter mouvement lateral
-            State=AstronautState.Idle;
-	    }
+
+		theta = newTheta;
 	}
 
 	public void Jump()
@@ -258,13 +250,26 @@ public class Astronaut : MonoBehaviour {
     /// </summary>
     public void Stun()
     {
-		//TODO
+        State = AstronautState.Stun;
+        StartCoroutine(StunTimeout());
+        _astronautAnimator.Stun();
+    }
+
+    IEnumerator StunTimeout()
+    {
+        for (float i = 0f; i <0.6f; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        State = AstronautState.Idle;
+        _astronautAnimator.Idle();
     }
 
     public void OnGUI()
 	{
 		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
 		{
+            Stun();
 			Debug.Log("Clicked the button with an image");
             //_astronautAnimator.Walk();
 			//Eject();

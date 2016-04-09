@@ -24,19 +24,21 @@ public class AstronautAnimator : MonoBehaviour {
     {
         aspi.SpriteWalk.gameObject.SetActive(true);
         aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
 
     public void Dash()
     {
         aspi.SpriteWalk.gameObject.SetActive(false);
         aspi.SpriteDash.gameObject.SetActive(true);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
 
-    public void Land()
+    public void Idle()
     {
-        
         aspi.SpriteWalk.gameObject.SetActive(true);
         aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
 
     public void Walk(bool right)
@@ -50,6 +52,14 @@ public class AstronautAnimator : MonoBehaviour {
         var audio = aspi.GetComponent<AudioSource>();  //eject sound
         audio.bypassListenerEffects = true;
         AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
+        Stun();
+    }
+
+    public void Stun()
+    {
+        aspi.SpriteWalk.gameObject.SetActive(false);
+        aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(true);
     }
 
     IEnumerator Spin()
