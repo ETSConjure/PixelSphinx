@@ -327,7 +327,7 @@ Prefab:
       objectReference: {fileID: 1106066633}
     - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
       propertyPath: EjectSpeed
-      value: 50
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
