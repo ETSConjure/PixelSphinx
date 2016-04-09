@@ -21,6 +21,8 @@ public class Astronaut : MonoBehaviour {
 	public float JumpSpeed;
 	public float Gravity;
 	public float Speed;
+	public float EjectSpeed;
+	//public float DashSpeed;
 
 	public PlanetManager planet;
 
@@ -120,15 +122,27 @@ public class Astronaut : MonoBehaviour {
 		if (!grounded)
 		{
 			height += vSpeed * delta;
-			vSpeed -= Gravity * delta;
+			if (State != AstronautState.Ejecting)
+				vSpeed -= Gravity * delta;
+			else
+				vSpeed *= 0.98f;
 		}
 
 		float radius = GetGroundRadius();
 		if (grounded = (height <= radius))
 		{
+			/*if (State == AstronautState.Dashing)
+			{
+				planet.PushWedge(Repeat(theta,360));
+				State = AstronautState.Idle;
+				//TODO_SR Create dash impact here
+			}*/
+
 			height = radius;
 			if (State == AstronautState.Jumping)
 				State = AstronautState.Idle;
+
+			vSpeed = 0f;
 		}
 
 		UpdatePosition();
@@ -207,7 +221,7 @@ public class Astronaut : MonoBehaviour {
 		}
 	    if (State == AstronautState.Dashing && grounded)
 	    {
-            //TODO arreter mouvelement lateral
+            //TODO arreter mouvement lateral
             State=AstronautState.Idle;
 	    }
 	}
@@ -241,6 +255,16 @@ public class Astronaut : MonoBehaviour {
 
 	    lastDashTime = Time.time;
         planet.PushWedge(this.theta);
+
+		//State = AstronautState.Dashing;
+		//vSpeed = -DashSpeed;
+	}
+
+	public void Eject()
+	{
+		State = AstronautState.Ejecting;
+		vSpeed = EjectSpeed;
+		grounded = false;
 	}
 
     /// <summary>
@@ -251,27 +275,12 @@ public class Astronaut : MonoBehaviour {
         print("Stunned");
     }
 
-
-
     public void OnGUI()
 	{
-        if (GUI.Button(new Rect(10, 10, 150, 50), "Jump"))
-        {
-            Debug.Log("Clicked the button with an image");
-             _astronautAnimator.Jump();
-        }
-
-        if (GUI.Button(new Rect(10, 70, 150, 50), "Land"))
-        {
-            Debug.Log("Clicked the 2nd button");
-            _astronautAnimator.Land();
-        }
-
-        if (GUI.Button(new Rect(10, 130, 150, 50), "Walk"))
-        {
-            Debug.Log("Clicked the 3rd button");
-            State = AstronautState.Walking;
-            _astronautAnimator.Walk();
-        }
+		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
+		{
+			Debug.Log("Clicked the button with an image");
+			Eject();
+		}
 	}
 }

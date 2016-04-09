@@ -69,9 +69,10 @@ public class AsteroidSpawner : TimerFunctionsClass
                 print("angle:" + angle);
 
                 var AsteroidType = Mathf.RoundToInt(Mathf.Floor(UnityEngine.Random.Range(0f, 3.999f)));
-
+				float direction = (Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f)) * 2 - 1); 
+		
                 Instantiate(AsteroidPrefabTypes[AsteroidType], 
-                            planet.GetPlanetCoordinatesFromPlayerXY(angle, UnityEngine.Random.Range(10f,15f)), 
+                            direction*planet.GetPlanetCoordinatesFromPlayerXY(angle, UnityEngine.Random.Range(10f,15f)), 
                             Quaternion.identity);
             }
 
