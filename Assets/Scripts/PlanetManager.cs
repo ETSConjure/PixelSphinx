@@ -19,9 +19,11 @@ public class PlanetManager : MonoBehaviour
 	private float disbalance = 0f;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
+	private int numPlayer;
 
     // Use this for initialization
     public void Awake () {
+		numPlayer = 0;
         TailleCartiersEnDegres =  360.0f / NbCartiers;
 		balanceValue = (CartierMaxRatio + CartierMinRatio) / 2; 
           
@@ -45,6 +47,11 @@ public class PlanetManager : MonoBehaviour
     // Update is called once per frame
     public void Update () {
 		
+	}
+
+	public void addPlayer()
+	{
+		numPlayer++;
 	}
 
 	public void setColor(float val)
@@ -187,13 +194,30 @@ public class PlanetManager : MonoBehaviour
                     //si player sur la plateforme et grounded
                     if (w.tMax >= p.GetTheta() && p.GetTheta() >= w.tMin && p.IsGrounded())
                     {
-                        p.Eject();
+						p.Eject();
                     }
                 }
             }
                
         }
     }
+
+	public void playerDeath(Astronaut aPlayer)
+	{
+		numPlayer--;
+		//check if all players are dead
+		if (numPlayer < 2)
+		{
+			if (numPlayer < 1)
+			{
+				print("game is lost");
+			}
+			else
+			{
+				print("winner is you!");
+			}
+		}
+	}
 
     //public void PushWedge(float thetaPlayerX)
     //{

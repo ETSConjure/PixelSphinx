@@ -132,10 +132,6 @@ Prefab:
       propertyPath: m_Name
       value: Astronaut_0
       objectReference: {fileID: 0}
-    - target: {fileID: 11434752, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
-      propertyPath: PlayerNumber
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
   m_IsPrefabParent: 0
@@ -514,6 +510,10 @@ Prefab:
     - target: {fileID: 154602, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11434752, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: PlayerNumber
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}

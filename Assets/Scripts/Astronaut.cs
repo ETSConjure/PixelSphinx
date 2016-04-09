@@ -7,7 +7,7 @@ public class Astronaut : MonoBehaviour {
     private AstronautAnimator _astronautAnimator;
 	public enum AstronautState
 	{
-		Idle, Walking, Jumping, Dashing, Ejecting, Dead
+		Idle, Walking, Jumping, Dashing, Stun, Ejecting, Dead
 	}
 
 	public GameObject Rotator;
@@ -56,11 +56,10 @@ public class Astronaut : MonoBehaviour {
                 SpriteDash.gameObject.SetActive(false);
 			}*/
             
-			/*if (_state == AstronautState.Walking)
+			if (State == AstronautState.Walking)
 			{
-				//StartCoroutine(WalkingStance());
-                _astronautAnimator.Walk();
-			}*/
+                _astronautAnimator.Walk(walkRight);
+			}
 		}
 	}
 
@@ -68,6 +67,7 @@ public class Astronaut : MonoBehaviour {
 	private float height = 0;
     private float vSpeed = 0;
 	private bool grounded = false;
+    private bool walkRight = false;
 
 	private float walkTime = 0;
 	private int nextStep = 1;
@@ -93,6 +93,7 @@ public class Astronaut : MonoBehaviour {
 	    {
 	        planet = FindObjectOfType<PlanetManager>();
 	    }
+		planet.addPlayer();
 
 	    State = AstronautState.Idle;
 		theta = 0;
@@ -221,6 +222,7 @@ public class Astronaut : MonoBehaviour {
 			}
 			else
 			{
+                walkRight = move > 0;
 				State = AstronautState.Walking;
 				walkTime = 0f;
 			}
@@ -237,7 +239,7 @@ public class Astronaut : MonoBehaviour {
 			float newHeight = GetGroundRadius(newTheta);
 			if (newHeight > height)
 			{
-				Debug.Log("Blocked by wall");
+				//Debug.Log("Blocked by wall");
 				return; // Blocked by wall
 			}
 
@@ -296,6 +298,8 @@ public class Astronaut : MonoBehaviour {
 		vSpeed = EjectSpeed;
 	    _astronautAnimator.Eject();
 		grounded = false;
+
+		planet.playerDeath(this);
 	}
 
     /// <summary>
@@ -303,7 +307,7 @@ public class Astronaut : MonoBehaviour {
     /// </summary>
     public void Stun()
     {
-        print("Stunned");
+		//TODO
     }
 
     public void OnGUI()
@@ -311,7 +315,14 @@ public class Astronaut : MonoBehaviour {
 		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
 		{
 			Debug.Log("Clicked the button with an image");
-			Eject();
-		}
+            //_astronautAnimator.Walk();
+			//Eject();
+        }
+       /* if (GUI.Button(new Rect(60, 10, 150, 50), "Stop"))
+        {
+            Debug.Log("Clicked the button with an image");
+            _astronautAnimator.StopWalk();
+            //Eject();
+        }*/
 	}
 }
