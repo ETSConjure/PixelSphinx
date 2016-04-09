@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &170392
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab270b0cb2475114ab8eb45661af0df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerNumber: 0
+  PlayerNumber: 1
 --- !u!114 &11491252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -158,9 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aspi: {fileID: 0}
-  WalkAnimSpeed: 4
-  WalkAnimAngle: 15
-  EjectSpinSpeed: 80
+  WalkAnimSpeed: 3
+  WalkAnimAngle: 20
+  EjectSpinSpeed: 10
   DustParticlesEmitter: {fileID: 138982, guid: 6233079c5a9a756458811f283fdca112, type: 2}
 --- !u!114 &11494368
 MonoBehaviour:
@@ -177,6 +177,7 @@ MonoBehaviour:
   SpriteWalk: {fileID: 21220066}
   SpriteDash: {fileID: 157058}
   Width: 0.4
+  Height: 0.7
   DashTime: 0.4
   StepTime: 5
   JumpSpeed: 5

@@ -15,6 +15,7 @@ public class Astronaut : MonoBehaviour {
 	public GameObject SpriteDash;
 
 	public float Width;
+	public float Height;
     public float DashTime = 0.4f; //Temps de l'animation et rate limiting
     private float lastDashTime = 0f;
 	public float StepTime;
@@ -104,7 +105,7 @@ public class Astronaut : MonoBehaviour {
 	private void UpdatePosition()
 	{
 		//float heightAtPos = planet.GetPlanetRadius(theta);
-		transform.localPosition = new Vector3(0, height, 0);
+		transform.localPosition = new Vector3(0, height + Height / 2, 0);
 		Rotator.transform.localRotation = Quaternion.Euler(0, 0, theta - 108);
 	}
 
