@@ -82,7 +82,7 @@ public class PlanetManager : MonoBehaviour
             {
                 w.offset = 1.0f;
             }
-            else if (w.offset > 1.0f && Time.time >= w.timeSincePushedToMaximum + CartierWaitBeforeRaise)
+            else if (w.offset > 1.0f && Time.time >= w.timeSinceLastPushedBack + CartierWaitBeforeRaise)
             {
                 if (!CartierResetRatioSpeedRandomize)
                 {
@@ -136,13 +136,15 @@ public class PlanetManager : MonoBehaviour
         var v = wedges[indexOppose];
 
        // if (Time.time >= v.timeSincePushedToMinimum + CartierWaitBeforeRaise)  // résultats étranges ;)
-        if (wOffsetBefore >= 0.9f)
-        {
+       // if (wOffsetBefore >= 0.9f)
+       // {
+            if (v.offset < CartierMaxRatio) v.timeSinceLastPushedBack = Time.time;
+
             v.offset = v.offset + difference;  //CartierStepSize; //diférentiel au lieu du step size
             if (v.offset >= CartierMaxRatio)
             {
                 v.offset = CartierMaxRatio;
-                w.timeSincePushedToMaximum = Time.time;
+               
 
                 //checker si on éjecte des players
                 var players = FindObjectsOfType<Astronaut>();
@@ -155,7 +157,7 @@ public class PlanetManager : MonoBehaviour
                 }
             }
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
-        }
+       // }
        
        
 
@@ -304,7 +306,7 @@ public class PlanetManager : MonoBehaviour
         public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
         public float tMax = 0;
         public float timeSincePushedToMinimum = 0.0f;
-        public float timeSincePushedToMaximum = 0.0f;
+        public float timeSinceLastPushedBack = 0.0f;
         public GameObject sprite;         //sprite et collider 2D
         public GameObject gameObject;    //wedge prefab avec collider
     }
