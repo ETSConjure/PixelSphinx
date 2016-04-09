@@ -200,23 +200,15 @@ public class Astronaut : MonoBehaviour {
 
 	public void Move(float x, float y)
 	{
-        Vector3 pos = transform.position;
-        pos.z = 0;
-
         float playerX, playerY;
-        PlanetUtilities.Spheric2Cartesian(theta, height, out playerX, out playerY);
+        PlanetUtilities.Spheric2Cartesian(theta - 108, height, out playerX, out playerY);
 
-        Debug.Log(theta);
-        //Vector3 v = 
+        Vector3 pos = new Vector3(playerX, playerY);
 
-        Vector3 dirV = Vector3.Cross(pos, Vector3.up).normalized;
+        Vector3 dirV = Vector3.Cross(pos, Vector3.forward).normalized;
         float proj = Vector3.Dot(new Vector3(x, y, 0), dirV);
-        //Debug.Log(proj / Time.deltaTime);
 
-        Debug.Log(dirV);
-
-        //float move = proj / Time.deltaTime; //Mathf.Abs(proj) < 0.1 ? 0 : proj;
-        float move = x;
+        float move = proj;
 
 		if (State >= AstronautState.Ejecting )
 			return;
@@ -237,11 +229,10 @@ public class Astronaut : MonoBehaviour {
 		if (State < AstronautState.Dashing)
 		{
 			if (-0.2 < move && move < 0.2) return;
-			//Debug.Log(x + "   " + Speed + "   " + height);
+
 			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
-			//Debug.Log("Moving! - " + height);
-			//Debug.Log("Daaa - " + movement);
-			float newTheta = (360 + theta + movement) % 360; // angle positif
+
+			float newTheta = Repeat(theta + movement, 360);
 
 			float newHeight = GetGroundRadius(newTheta);
 			if (newHeight > height)
@@ -257,15 +248,10 @@ public class Astronaut : MonoBehaviour {
             //TODO arreter mouvement lateral
             State=AstronautState.Idle;
 	    }
-        
 	}
 
 	public void Jump()
 	{
-        Debug.Log("Jump!");
-
-	
-
 	    if (State == AstronautState.Jumping)
 	    {
 	        Dash();
@@ -278,9 +264,10 @@ public class Astronaut : MonoBehaviour {
         else if (State >= AstronautState.Ejecting)
             return;
 
+        if (!grounded) return;
+
         _astronautAnimator.Jump();  // deja dans le property get/set
 
-        if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
 		State = AstronautState.Jumping;
