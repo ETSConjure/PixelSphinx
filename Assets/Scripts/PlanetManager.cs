@@ -33,6 +33,7 @@ public class PlanetManager : MonoBehaviour
             var obj = Instantiate(WedgePrefab, new Vector3(0.0f,0.0f, 0.0f), Quaternion.Euler(0, 0, debutAngleTheta));
             obj.name = "wedge_" + i;
             w.sprite = GameObject.Find(obj.name);
+            w.gameObject = (GameObject)obj;
             wedges.Add(w);  //pushes at end.
         }
     }
@@ -99,8 +100,24 @@ public class PlanetManager : MonoBehaviour
         var v = wedges[indexOppose];
 
         v.offset = v.offset + CartierStepSize;
-        if (v.offset > CartierMaxRatio)
+        if (v.offset >= CartierMaxRatio)
+        {
             v.offset = CartierMaxRatio;
+
+
+            //checker si on éjecte des players
+            var players = FindObjectsOfType<Astronaut>();
+            foreach (var p in players)
+            {
+                if (v.tMax >= p.GetTheta() && p.GetTheta() >= v.tMin && p.IsGrounded())
+                {
+                    p.Eject();
+                }
+            }
+
+
+        }
+       
 
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
 
@@ -233,6 +250,6 @@ public class PlanetManager : MonoBehaviour
         public float tMax = 0;
 
         public GameObject sprite;         //sprite et collider 2D
-
+        public GameObject gameObject;    //wedge prefab avec collider
     }
 }

@@ -61,13 +61,23 @@ public class Astronaut : MonoBehaviour {
 
 	private float theta = 0;
 	private float height = 0;
-	private float vSpeed = 0;
+	public float vSpeed = 0;
 	private bool grounded = false;
 
 	private float walkTime = 0;
 	private int nextStep = 1;
 
-	// Use this for initialization
+    public float GetTheta()
+    {
+        return theta;
+    }
+
+    public bool IsGrounded()
+    {
+        return grounded;
+    }
+
+    // Use this for initialization
     void Start()
     {
         _astronautAnimator = GetComponent<AstronautAnimator>();
@@ -142,8 +152,9 @@ public class Astronaut : MonoBehaviour {
 			if (State == AstronautState.Jumping)
 				State = AstronautState.Idle;
 
-			vSpeed = 0f;
+			if (State < AstronautState.Ejecting) vSpeed = 0f;
 		}
+
 
 		UpdatePosition();
 
@@ -224,6 +235,7 @@ public class Astronaut : MonoBehaviour {
             //TODO arreter mouvement lateral
             State=AstronautState.Idle;
 	    }
+        
 	}
 
 	public void Jump()

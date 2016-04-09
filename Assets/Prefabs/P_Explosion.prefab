@@ -36,7 +36,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120238}
   serializedVersion: 2
-  lengthInSec: 3
+  lengthInSec: 0.75
   startDelay:
     scalar: 0
     maxCurve:
@@ -83,7 +83,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 3
+      scalar: 0.75
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -237,7 +237,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 1
+      scalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -359,7 +359,7 @@ ParticleSystem:
     length: 5
     boxX: 1
     boxY: 1
-    boxZ: 35.55
+    boxZ: 1
     arc: 360
     placementMode: 0
     m_Mesh: {fileID: 0}

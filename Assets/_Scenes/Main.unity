@@ -104,48 +104,6 @@ MonoBehaviour:
   WalkAnimSpeed: 0
   WalkAnimAngle: 0
   EjectSpinSpeed: 0
---- !u!1001 &595727044
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 8.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 494682, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: cc1a204562630cd40a1dd685b5ed8e6e, type: 2}
-  m_IsPrefabParent: 0
 --- !u!114 &1027139440 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11471614, guid: 198e988adacced646a19f757f6237ae1,
@@ -367,6 +325,10 @@ Prefab:
       propertyPath: SpriteWalk
       value: 
       objectReference: {fileID: 1106066633}
+    - target: {fileID: 11494368, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
+      propertyPath: EjectSpeed
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: acd71c7b2f995984d9033c9dc4e257dc, type: 2}
   m_IsPrefabParent: 0
