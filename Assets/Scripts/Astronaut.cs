@@ -281,20 +281,4 @@ public class Astronaut : MonoBehaviour {
         }
     }
 
-    public void OnGUI()
-	{
-		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
-		{
-            Stun();
-			Debug.Log("Clicked the button with an image");
-            //_astronautAnimator.Walk();
-			//Eject();
-        }
-       /* if (GUI.Button(new Rect(60, 10, 150, 50), "Stop"))
-        {
-            Debug.Log("Clicked the button with an image");
-            _astronautAnimator.StopWalk();
-            //Eject();
-        }*/
-	}
 }

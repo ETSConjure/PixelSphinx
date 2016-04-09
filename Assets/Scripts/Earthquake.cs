@@ -44,15 +44,6 @@ public class Earthquake : MonoBehaviour {
 		}
 	}
 
-	void OnGUI()
-	{
-		if (GUI.Button(new Rect(100, 100, 50, 50), "BOOM"))
-		{
-			Debug.Log("Clicked the button with an image");
-			EarthquakeBoom();
-		}
-	}
-
 	private void EarthquakeBoom()
 	{
 		isExploding = true;
