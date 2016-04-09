@@ -14,8 +14,8 @@ public class Astronaut : MonoBehaviour {
 	public SpriteRenderer SpriteWalk;
 	public GameObject SpriteDash;
 
-	public float Width;
-	public float Height;
+	public float SpriteWidth;
+	public float SpriteHeight;
     public float DashTime = 0.4f; //Temps de l'animation et rate limiting
     private float lastDashTime = 0f;
 	public float StepTime;
@@ -66,6 +66,10 @@ public class Astronaut : MonoBehaviour {
 
 	private float theta = 0;
 	private float height = 0;
+	public float Height
+	{
+		get { return height; }
+	}
     private float vSpeed = 0;
 	private bool grounded = false;
     private bool walkRight = false;
@@ -105,7 +109,7 @@ public class Astronaut : MonoBehaviour {
 	private void UpdatePosition()
 	{
 		//float heightAtPos = planet.GetPlanetRadius(theta);
-		transform.localPosition = new Vector3(0, height + Height / 2, 0);
+		transform.localPosition = new Vector3(0, height + SpriteHeight / 2, 0);
 		Rotator.transform.localRotation = Quaternion.Euler(0, 0, theta - 108);
 	}
 
@@ -116,7 +120,7 @@ public class Astronaut : MonoBehaviour {
 
 	private float GetGroundRadius(float theta)
 	{
-		float displacement = PlanetUtilities.GetDisplacementAngle(Width / 2, height);
+		float displacement = PlanetUtilities.GetDisplacementAngle(SpriteWidth / 2, height);
 		float radius1 = planet.GetPlanetRadius(Repeat(theta + displacement, 360));
 		float radius2 = planet.GetPlanetRadius(Repeat(theta - displacement, 360));
 		//float x1, y1, x2, y2;

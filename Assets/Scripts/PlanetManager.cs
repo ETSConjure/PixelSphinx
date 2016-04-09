@@ -172,14 +172,20 @@ public class PlanetManager : MonoBehaviour
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
        // }
        
-       
-
-        
-
             // call fill gauge after every hit.
-            var earthQuakeGauge = FindObjectOfType<Earthquake>();
-            earthQuakeGauge.FillGauge();
+            //var earthQuakeGauge = FindObjectOfType<Earthquake>();
+            //earthQuakeGauge.FillGauge();
     }
+
+	public void EjectPlayers(float range)
+	{
+		Astronaut[] players = FindObjectsOfType<Astronaut>();
+		foreach (Astronaut p in players)
+		{
+			if (p.State < Astronaut.AstronautState.Ejecting && p.Height <= range)
+				p.Eject();
+		}
+	}
 
     /// <summary>
     /// On a earthquake, everything expands by a step

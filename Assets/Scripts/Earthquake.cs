@@ -6,26 +6,30 @@ public class Earthquake : MonoBehaviour {
 
 	public float CriticalMin;
 	public float CriticalMax;
-	//public float testValue;
+	public float ExplosionTime;
+	public GameObject ExplosionParticle;
+	private const float WaveSpeed = 1f;
+	private const float WaveOffset = 1.3f;
 
-    //public float gaugeLevel;
-    //public int gaugeMax=100;
 	private SpriteRenderer core;
 	PlanetManager pmgr;
+
+	bool isExploding;
 
 
 	// Use this for initialization
     public void Start()
 	{
+		isExploding = false;
 		pmgr = FindObjectOfType<PlanetManager>();
-        //gaugeLevel = 0;
 		core = this.GetComponent<SpriteRenderer>();
-        //InvokeRepeating("FillGauge", 1, 1F);
-	
 	}
 
     // Update is called once per frame
     public void Update () {
+
+		if(!isExploding) return;
+
 		float disbalance = pmgr.GetDisbalance();
 		float val = Mathf.Clamp((disbalance-CriticalMin) / (CriticalMax-CriticalMin),0,1);
 		
@@ -34,47 +38,37 @@ public class Earthquake : MonoBehaviour {
 
 		core.color = new Color(1f, 1f - val, 1f - val);
 
+		if (val2 >= 1f)
+		{
+			EarthquakeBoom();
+		}
 	}
 
-    /// <summary>
-    /// Actualiser l'affichage de la gauge
-    /// </summary>
-    public void UpdateFixed()
-    {   
-    }
+	void OnGUI()
+	{
+		if (GUI.Button(new Rect(100, 100, 50, 50), "BOOM"))
+		{
+			Debug.Log("Clicked the button with an image");
+			EarthquakeBoom();
+		}
+	}
 
-    /// <summary>
-    /// à être Appelé à chaque fois qu'on enfonce un plateau, le gage se remplis plus vite. (et par le temps)
-    /// </summary>
-    public void FillGauge()
-    {
+	private void EarthquakeBoom()
+	{
+		isExploding = true;
+		StartCoroutine(Explode());
+		Instantiate(ExplosionParticle);
+	}
 
-        /*if (gaugeLevel < gaugeMax)
-        {
-            gaugeLevel += 1;
-
-            //anim state [0-90] normale, rotation
-
-            //color hue de plus en plus vers le rouge
-
-            //[90-100]
-            //anim avec les ripples
-
-
-        }
-        else
-        {
-
-            var planet = FindObjectOfType<PlanetManager>();
-
-            planet.CallEarthQuake();
-
-            gaugeLevel = 0;
-            
-        }
-        print("gauge is at: " + gaugeLevel);*/
-    }
-
-
-    
+	IEnumerator Explode()
+	{
+		float realPosition;
+		for (float i = 0; i < ExplosionTime; i += Time.deltaTime)
+		{
+			realPosition = WaveSpeed * i + WaveOffset;
+			Debug.Log(realPosition);
+			pmgr.EjectPlayers(realPosition);
+			yield return null;
+		}
+	}
 }
