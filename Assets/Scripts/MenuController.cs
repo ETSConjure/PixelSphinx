@@ -7,12 +7,14 @@ public class MenuController : MonoBehaviour
 	private Astronaut _astronaut;
 
 	public GameObject ReadySprite;
+	public MenuManager Menu;
 	public int PlayerNumber;
 
 	public void Update()
 	{
-		ReadySprite.SetActive(_astronaut.Height < 3.5);
-		//Debug.Log(_astronaut.Height);
+		bool active = _astronaut.Height < 3.5;
+		ReadySprite.SetActive(active);
+		WorldManager.Instance.PlayersActive[PlayerNumber] = active;
 	}
 
 	// Use this for initialization
@@ -37,6 +39,11 @@ public class MenuController : MonoBehaviour
 		if (input.Actions.Contains("Jump"))
 		{
 			_astronaut.Jump();
+		}
+
+		if (input.Actions.Contains("Start"))
+		{
+			Menu.StartGame();
 		}
 	}
 }

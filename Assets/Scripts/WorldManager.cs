@@ -1,25 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WorldManager : MonoBehaviour {
-
-    private static WorldManager instance = null; 
-    private WorldManager(){}             
-
-	// Use this for initialization
-	public void Awake () {
-        if (!instance)
-        {
-            instance = new WorldManager();
-        }
+public class WorldManager
+{
+	private static WorldManager instance = new WorldManager();
+	public static WorldManager Instance
+	{
+		get { return instance; }
 	}
+	private WorldManager() { }
 
-    public WorldManager getInstance() {
-        return instance;
-    }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public bool[] PlayersActive = { false, false, false, false };
 }

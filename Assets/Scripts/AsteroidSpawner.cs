@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class AsteroidSpawner : TimerFunctionsClass
 {
-
     public float NextSpawnTime = 1.0f;
     public GameObject AsteroidPrefab1;
     public GameObject AsteroidPrefab2;

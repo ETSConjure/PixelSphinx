@@ -16,6 +16,9 @@ MonoBehaviour:
     ButtonActions:
     - name: Jump
       XboxButtons: 00000000
+      KeyboardKeys: 
+    - name: Start
+      XboxButtons: 07000000
       KeyboardKeys: 20000000
     AxisRanges:
     - name: Dash
