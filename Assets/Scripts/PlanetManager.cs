@@ -84,23 +84,23 @@ public class PlanetManager : MonoBehaviour
 
     public void PushWedge(float thetaPlayerX)
     {
-            var index = GetWedgeIndex(thetaPlayerX);
-            var w = wedges[index];
+        var index = GetWedgeIndex(thetaPlayerX);
+        var w = wedges[index];
 
-            w.offset = w.offset - CartierStepSize;
-            if (w.offset < CartierMinRatio)
-                w.offset = CartierMinRatio;
+        w.offset = w.offset - CartierStepSize;
+        if (w.offset < CartierMinRatio)
+            w.offset = CartierMinRatio;
 
 
-            w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
+        w.sprite.transform.localScale = new Vector3(w.offset, w.offset, 1);
 
-            //push back l'opposée
-            var indexOppose = GetWedgeOpposé(index);
-            var v = wedges[indexOppose];
+        //push back l'opposée
+        var indexOppose = GetWedgeOpposé(index);
+        var v = wedges[indexOppose];
 
-            v.offset = v.offset + CartierStepSize;
-            if (v.offset > CartierMaxRatio)
-                v.offset = CartierMaxRatio;
+        v.offset = v.offset + CartierStepSize;
+        if (v.offset > CartierMaxRatio)
+            v.offset = CartierMaxRatio;
 
             v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
 
@@ -108,7 +108,6 @@ public class PlanetManager : MonoBehaviour
             var earthQuakeGauge = FindObjectOfType<Earthquake>();
             earthQuakeGauge.FillGauge();
     }
-
 
     /// <summary>
     /// On a earthquake, everything expands by a step
@@ -128,8 +127,6 @@ public class PlanetManager : MonoBehaviour
     //    var index = GetWedgeIndex(thetaPlayerX);
     //    var w = wedges[index];
 
-
-
     //    w.offset = w.offset - 0.5f;
     //    if (w.offset < -1.0f)
     //        w.offset = -1.0f;
@@ -143,7 +140,6 @@ public class PlanetManager : MonoBehaviour
     //    var wedgePos = GetPlanetCoordinatesFromPlayerXY(angle, 0);
     //    wedgePos.x -=  Mathf.Cos(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Cos(angle * Mathf.PI / 180);     
     //    wedgePos.y -=  Mathf.Sin(angle * Mathf.PI / 180) - 50 * w.offset * Mathf.Sin(angle * Mathf.PI / 180);
-
 
     //    w.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
 
@@ -165,12 +161,9 @@ public class PlanetManager : MonoBehaviour
     //    wedgePos.x -= Mathf.Cos(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Cos(angle * Mathf.PI / 180);
     //    wedgePos.y -= Mathf.Sin(angle * Mathf.PI / 180) - 50 * v.offset * Mathf.Sin(angle * Mathf.PI / 180);
 
-
     //    v.sprite.transform.position = Vector3.Lerp(normalPos, wedgePos, Time.deltaTime);
 
-
     //}
-
 
     /// <summary>
     /// Radius sphere est scale/2
@@ -190,8 +183,6 @@ public class PlanetManager : MonoBehaviour
 		var wedge = GetWedgeFromTheta(thetaPlayerX);
 		return GetPlanetRadius() * wedge.offset;
 	}
-
-
     public Vector3 GetPlanetCoordinatesFromPlayerXY(float playerLocalX, float playerLocalY)
     {
         var theta = playerLocalX;
@@ -201,7 +192,6 @@ public class PlanetManager : MonoBehaviour
 
         return new Vector3(x, y, 0);
     }
-
 
     /// <summary>
     /// retourn le no de plateforme
@@ -222,7 +212,6 @@ public class PlanetManager : MonoBehaviour
         //(i + 5) % 10 => [0,9]
         return (wedgeIndex + NbCartiers / 2) % (NbCartiers);
     }
-
 
     /// <summary>
     /// retourne l'objet interne
@@ -246,5 +235,4 @@ public class PlanetManager : MonoBehaviour
         public GameObject sprite;         //sprite et collider 2D
 
     }
-
 }

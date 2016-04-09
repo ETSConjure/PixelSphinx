@@ -18,15 +18,13 @@ public class Asteroid : MonoBehaviour
     public void Start()
     {
         speed = Random.Range(1.8F, 3F);
-        // print(speed);
         center = new Vector3(0, 0);
-
-
+		
         if (RandomRotationSpeed)
             rotationSpeed =  10 * UnityEngine.Random.Range(0.25f, 5f);
-
-        rotationDirection = (Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
-
+		
+		rotationDirection = (Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f)) * 2 - 1); 
+		
     }
 
     // Update is called once per frame

@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AstronautAnimator))]
 public class Astronaut : MonoBehaviour {
 
-	private enum AstronautState
+    private AstronautAnimator _astronautAnimator;
+	public enum AstronautState
 	{
 		Idle, Walking, Jumping, Dashing, Ejecting, Dead
 	}
 
 	public GameObject Rotator;
-	public GameObject SpriteWalk;
+	public SpriteRenderer SpriteWalk;
 	public GameObject SpriteDash;
 
 	public float Width;
@@ -19,11 +21,13 @@ public class Astronaut : MonoBehaviour {
 	public float JumpSpeed;
 	public float Gravity;
 	public float Speed;
+	public float EjectSpeed;
+	//public float DashSpeed;
 
 	public PlanetManager planet;
 
 	private AstronautState _state;
-	private AstronautState State
+	public AstronautState State
 	{
 		get
 		{
@@ -37,19 +41,20 @@ public class Astronaut : MonoBehaviour {
 			if (oldState == _state) return;
 			
 			if (oldState == AstronautState.Dashing)
-			{
-				SpriteWalk.SetActive(false);
-				SpriteDash.SetActive(true);
+            {
+                SpriteWalk.gameObject.SetActive(false);
+                SpriteDash.gameObject.SetActive(true);
 			}
 			else
-			{
-				SpriteWalk.SetActive(true);
-				SpriteDash.SetActive(false);
+            {
+                SpriteWalk.gameObject.SetActive(true);
+                SpriteDash.gameObject.SetActive(false);
 			}
-
+            
 			/*if (_state == AstronautState.Walking)
 			{
-				StartCoroutine(WalkingStance());
+				//StartCoroutine(WalkingStance());
+                _astronautAnimator.Walk();
 			}*/
 		}
 	}
@@ -62,12 +67,18 @@ public class Astronaut : MonoBehaviour {
 	private float walkTime = 0;
 	private int nextStep = 1;
 
-    // Use this for initialization
-    public void Start () {
+	// Use this for initialization
+    void Start()
+    {
+        _astronautAnimator = GetComponent<AstronautAnimator>();
+        _astronautAnimator.aspi = this;
+		State = AstronautState.Idle;
+
 	    if (!planet)
 	    {
 	        planet = FindObjectOfType<PlanetManager>();
 	    }
+
 	    State = AstronautState.Idle;
 		//Debug.Log(planet.GetPlanetRadius(0));
 		theta = 0;
@@ -111,15 +122,27 @@ public class Astronaut : MonoBehaviour {
 		if (!grounded)
 		{
 			height += vSpeed * delta;
-			vSpeed -= Gravity * delta;
+			if (State != AstronautState.Ejecting)
+				vSpeed -= Gravity * delta;
+			else
+				vSpeed *= 0.98f;
 		}
 
 		float radius = GetGroundRadius();
 		if (grounded = (height <= radius))
 		{
+			/*if (State == AstronautState.Dashing)
+			{
+				planet.PushWedge(Repeat(theta,360));
+				State = AstronautState.Idle;
+				//TODO_SR Create dash impact here
+			}*/
+
 			height = radius;
 			if (State == AstronautState.Jumping)
 				State = AstronautState.Idle;
+
+			vSpeed = 0f;
 		}
 
 		UpdatePosition();
@@ -135,8 +158,7 @@ public class Astronaut : MonoBehaviour {
 		{
 			walkTime += Time.deltaTime / StepTime;
 			Vector3 rotation = transform.rotation.eulerAngles;
-			rotation.z = Mathf.Sin(walkTime * Mathf.PI)*50;
-			transform.rotation = Quaternion.Euler(rotation);
+    			rotation.z = Mathf.Sin(walkTime * Mathf.PI)*50;			transform.rotation = Quaternion.Euler(rotation);
 		}*/
 
 		/*
@@ -199,15 +221,20 @@ public class Astronaut : MonoBehaviour {
 		}
 	    if (State == AstronautState.Dashing && grounded)
 	    {
-            //TODO arreter mouvelement lateral
+            //TODO arreter mouvement lateral
             State=AstronautState.Idle;
 	    }
 	}
 
 	public void Jump()
 	{
+        Debug.Log("Jump!");
+
 		if (State >= AstronautState.Ejecting)
 			return;
+
+        _astronautAnimator.Jump();
+
 	    if (State == AstronautState.Jumping)
 	    {
 	        Dash();
@@ -215,6 +242,7 @@ public class Astronaut : MonoBehaviour {
 	        return;
 
 	    }
+
 	    if (!grounded) return;
 		vSpeed = JumpSpeed;
 		grounded = false;
@@ -227,11 +255,21 @@ public class Astronaut : MonoBehaviour {
 	    if (Time.time < DashTime + lastDashTime)
             return;
         
-        if (_state >= AstronautState.Ejecting)
-		return;
+        if (State >= AstronautState.Ejecting)
+		    return;
 
 	    lastDashTime = Time.time;
         planet.PushWedge(this.theta);
+
+		//State = AstronautState.Dashing;
+		//vSpeed = -DashSpeed;
+	}
+
+	public void Eject()
+	{
+		State = AstronautState.Ejecting;
+		vSpeed = EjectSpeed;
+		grounded = false;
 	}
 
     /// <summary>
@@ -242,31 +280,12 @@ public class Astronaut : MonoBehaviour {
         print("Stunned");
     }
 
-
-
     public void OnGUI()
 	{
 		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
+		{
 			Debug.Log("Clicked the button with an image");
+			Eject();
+		}
 	}
-
-	/*IEnumerator WalkingStance()
-	{
-		Debug.Log("walking stance");
-		walkTime += Time.deltaTime / StepTime;
-		while (State <= AstronautState.Walking || walkTime <= 1f)
-		{
-			Vector3 rotation = transform.rotation.eulerAngles;
-			rotation.z = Mathf.Sin(walkTime*Mathf.PI)*50;
-           // print("rotation " + rotation);
-			transform.rotation = Quaternion.Euler(rotation);
-			yield return null;
-		}
-
-		walkTime = 0f;
-		if(State == AstronautState.Walking)
-		{
-			StartCoroutine("WalkingStance");
-		}
-	}*/
 }
