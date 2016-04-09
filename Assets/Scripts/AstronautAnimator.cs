@@ -73,7 +73,7 @@ public class AstronautAnimator : MonoBehaviour {
         var audio = aspi.GetComponent<AudioSource>();  //eject sound
         audio.bypassListenerEffects = true;
         AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
-        Stun();
+        //Stun();
     }
 
     public void Stun()
