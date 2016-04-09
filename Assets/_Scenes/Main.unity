@@ -399,7 +399,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11401034, guid: 198e988adacced646a19f757f6237ae1, type: 2}
       propertyPath: CriticalMin
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 11401034, guid: 198e988adacced646a19f757f6237ae1, type: 2}
       propertyPath: CriticalMax

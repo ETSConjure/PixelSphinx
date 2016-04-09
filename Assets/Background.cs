@@ -12,7 +12,7 @@ public class Background : MonoBehaviour {
 
 
         if (RandomRotationSpeed)
-            rotationSpeed = 10 * UnityEngine.Random.Range(0.25f, 1f);
+            rotationSpeed = 10 * UnityEngine.Random.Range(1.25f, 3f);
 
         rotationDirection = (Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f)) * 2 - 1);
     }
