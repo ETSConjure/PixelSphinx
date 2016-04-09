@@ -211,7 +211,7 @@ public class Astronaut : MonoBehaviour {
 
         float move = proj;
 
-		if (State >= AstronautState.Ejecting )
+		if (State >= AstronautState.Dashing )
 			return;
 
 		if (State < AstronautState.Jumping)
@@ -254,17 +254,15 @@ public class Astronaut : MonoBehaviour {
 
 	public void Jump()
 	{
+        if (State >= AstronautState.Dashing)
+            return;
+
 	    if (State == AstronautState.Jumping)
 	    {
 	        Dash();
             //State=AstronautState.Dashing;  //TODO relacher l'état Dashing
 	        return;
-
 	    }
-        else if (State >= AstronautState.Dashing)
-            return;
-        else if (State >= AstronautState.Ejecting)
-            return;
 
         if (!grounded) return;
 
@@ -277,7 +275,6 @@ public class Astronaut : MonoBehaviour {
 
 	public void Dash()
 	{
-	    
 	    if (Time.time < DashTime + lastDashTime)
             return;
         

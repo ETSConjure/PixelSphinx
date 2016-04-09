@@ -41,7 +41,6 @@ public class AstronautAnimator : MonoBehaviour {
 
     public void Walk(bool right)
     {
-        Debug.Log("Walking!");
         StartCoroutine(Rotate(right? -1 : 1));
     }
 
@@ -77,12 +76,8 @@ public class AstronautAnimator : MonoBehaviour {
 
         if (aspi.State == Astronaut.AstronautState.Walking)
         {
-            Debug.Log("Walking again");
             StartCoroutine(Rotate(-side));
         }
-        else
-            Debug.Log("Walking stop");
-        //yield return null;
     }
 
     public void EmitDustParticules()
