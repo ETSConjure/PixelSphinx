@@ -10,6 +10,10 @@ public class Asteroid : MonoBehaviour
     public float rotationDirection = 1.0f;
     public bool  RandomRotationSpeed = true;
 
+    public GameObject CrashFlamesEmitter;  //Emitter on impact
+
+    public GameObject TrailFlamesEmitter;  // trailing smoke
+
     // Use this for initialization
     public void Start()
     {
@@ -56,6 +60,13 @@ public class Asteroid : MonoBehaviour
         {
             var pmgr = FindObjectOfType<PlanetManager>();
             pmgr.PushWedge(otherCol.gameObject.transform.parent.eulerAngles.z);
+
+            if (CrashFlamesEmitter)
+            {
+                Instantiate(CrashFlamesEmitter, this.transform.position, this.transform.forward);
+            }
+
+
             Destroy(this.gameObject);
         }
     }
