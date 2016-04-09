@@ -160,10 +160,22 @@ public class PlanetManager : MonoBehaviour
         foreach (var w in wedges)
         {
             w.offset = w.offset + CartierStepSize;
-			if (w.offset > CartierMaxRatio)
-			{
-				w.offset = CartierMaxRatio;
-			}
+            if (w.offset >= CartierMaxRatio)
+            {
+                w.offset = CartierMaxRatio;
+
+                //checker si on éjecte des players
+                var players = FindObjectsOfType<Astronaut>();
+                foreach (var p in players)
+                {
+                    //si player sur la plateforme et grounded
+                    if (w.tMax >= p.GetTheta() && p.GetTheta() >= w.tMin && p.IsGrounded())
+                    {
+                        p.Eject();
+                    }
+                }
+            }
+               
         }
     }
 
