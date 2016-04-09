@@ -10,7 +10,7 @@ public class AstronautAnimator : MonoBehaviour {
     public float EjectSpinSpeed;
 
     private GameObject runninParticleEmitter;
-
+    public GameObject DashImpactSound;
     public GameObject DashParticleSystem;
     public GameObject DustParticlesEmitter;
     // Use this for initialization
@@ -53,6 +53,10 @@ public class AstronautAnimator : MonoBehaviour {
        
         Destroy(runninParticleEmitter, runninParticleEmitter.GetComponent<ParticleSystem>().duration);
 		Idle();
+
+        var impactAudio = DashImpactSound.GetComponent<AudioSource>();
+        impactAudio.bypassListenerEffects = true;
+        AudioSource.PlayClipAtPoint(impactAudio.clip, transform.position, impactAudio.volume);
 
 
     }

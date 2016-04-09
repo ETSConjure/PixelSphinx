@@ -265,7 +265,8 @@ MonoBehaviour:
   WalkAnimSpeed: 4
   WalkAnimAngle: 15
   EjectSpinSpeed: 80
-  DashParticleSystem: {fileID: 174982, guid: d876c44c9925f0b45b8c53bfb4f4967f, type: 2}
+  DashImpactSound: {fileID: 191714, guid: df0221176ed8d3c4a91e31e791e5c0cc, type: 2}
+  DashParticleSystem: {fileID: 138982, guid: 6233079c5a9a756458811f283fdca112, type: 2}
   DustParticlesEmitter: {fileID: 138982, guid: 6233079c5a9a756458811f283fdca112, type: 2}
 --- !u!114 &11494368
 MonoBehaviour:
