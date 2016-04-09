@@ -64,6 +64,12 @@ public class AsteroidSpawner : TimerFunctionsClass
             var planet = FindObjectOfType<PlanetManager>();
             foreach (var p in players)
             {
+
+                //arrêter de générer des asteroides si player ejecté (sinon on se rends compte d,une ligne d'astéroides)
+                Astronaut a = p.GetComponent<Astronaut>();
+                if (a.State >= Astronaut.AstronautState.Ejecting)
+                    continue; //next player;
+     
                 var playerTheta = Mathf.Atan2(p.transform.position.y, p.transform.position.x); 
                 var angle = ( 360.0f + (((playerTheta * 180)) / Mathf.PI)) % 360;  ///TODO : a changer pour p.theta
                 //print("angle:" + angle);

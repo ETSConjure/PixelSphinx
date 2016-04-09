@@ -65,7 +65,7 @@ public class Asteroid : MonoBehaviour
                 //crashPosition.z = 1.15f;
 
                 var asteroidTheta = Mathf.Atan2(this.transform.position.y, this.transform.position.x);
-                var angleImpact = (360.0f + (((asteroidTheta * 180)) / Mathf.PI)) % 360;   
+                var angleImpact = (360.0f + (((asteroidTheta * 180)) / Mathf.PI)) % 360;
 
                 var emitter = (GameObject)Instantiate(CrashFlamesEmitter, crashPosition, Quaternion.identity);
 
@@ -73,11 +73,18 @@ public class Asteroid : MonoBehaviour
                 //et donner l'angle d'impact inverse en z (vers l'extérieur de la planete)
                 //emitter.transform.Rotate(0,90.0f,angleImpact);
                 emitter.transform.localRotation = Quaternion.Euler(0, 180.0f, angleImpact);
-                    
-                emitter.GetComponent<ParticleSystem>().Play(true);
+
+            
+
+                //var wtf = new WaitForSeconds(emitter.GetComponent<ParticleSystem>().duration);
+                //Destroy(emitter);
+
             }
+
             Destroy(this.gameObject);
+           
         }
     }
+
 
 }

@@ -14,12 +14,15 @@ public class PlanetManager : MonoBehaviour
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
     public float CartierStepSize = 0.25f;
+	public float balanceValue;
+	private float disbalance = 0f;
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 
     // Use this for initialization
     public void Awake () {
         TailleCartiersEnDegres =  360.0f / NbCartiers;
+		balanceValue = (CartierMaxRatio + CartierMinRatio) / 2; 
           
         for(int i = 0; i < NbCartiers; i++)
         {
@@ -40,8 +43,31 @@ public class PlanetManager : MonoBehaviour
 
     // Update is called once per frame
     public void Update () {
-	
+		
+	}
 
+	public void setColor(float val)
+	{
+		foreach (Wedge w in wedges) {
+			//w = new Color(1f, 1f - val, 1f - val);
+			w.sprite.GetComponentInChildren<SpriteRenderer>().color = new Color(1f, (1-val), (1-val));
+		}
+
+		//TODO make planet red
+		//TODO screen shake
+		//TODO controller shake?
+	}
+
+	public float GetDisbalance()
+	{
+		disbalance = 0;
+		foreach (var w in wedges)
+		{
+			var temp = Math.Abs((w.offset - balanceValue) / (CartierMaxRatio - balanceValue));
+			disbalance += temp;
+		}
+		disbalance /= NbCartiers;
+		return disbalance;
 	}
 
     public void FixedUpdate()
@@ -134,8 +160,22 @@ public class PlanetManager : MonoBehaviour
         foreach (var w in wedges)
         {
             w.offset = w.offset + CartierStepSize;
-            if (w.offset > CartierMaxRatio)
+            if (w.offset >= CartierMaxRatio)
+            {
                 w.offset = CartierMaxRatio;
+
+                //checker si on éjecte des players
+                var players = FindObjectsOfType<Astronaut>();
+                foreach (var p in players)
+                {
+                    //si player sur la plateforme et grounded
+                    if (w.tMax >= p.GetTheta() && p.GetTheta() >= w.tMin && p.IsGrounded())
+                    {
+                        p.Eject();
+                    }
+                }
+            }
+               
         }
     }
 
@@ -237,7 +277,8 @@ public class PlanetManager : MonoBehaviour
     /// <returns></returns>
     public Wedge GetWedgeFromTheta(float thetaPlayerX)
     {
-        return wedges[GetWedgeIndex(thetaPlayerX % 360)];
+		print(GetWedgeIndex((thetaPlayerX)%360));
+        return wedges[GetWedgeIndex((thetaPlayerX) % 360)];
     }
 
     /// <summary>
