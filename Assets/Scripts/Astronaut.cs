@@ -43,18 +43,7 @@ public class Astronaut : MonoBehaviour {
 			if (oldState == AstronautState.Dashing)
             {
                 _astronautAnimator.Land();
-                //SpriteWalk.gameObject.SetActive(false);
-                //SpriteDash.gameObject.SetActive(true);
 			}
-            //else if (_state == AstronautState.Jumping)
-            //{
-            //    _astronautAnimator.Jump();
-            //}
-		    /*else
-            {
-                SpriteWalk.gameObject.SetActive(true);
-                SpriteDash.gameObject.SetActive(false);
-			}*/
             
 			if (State == AstronautState.Walking)
 			{
@@ -151,6 +140,7 @@ public class Astronaut : MonoBehaviour {
 			if (State == AstronautState.Dashing)
 			{
                 planet.PushWedge(this.theta);
+                State = AstronautState.Idle;
             }
 
 			height = radius;
@@ -160,43 +150,7 @@ public class Astronaut : MonoBehaviour {
 			if (State < AstronautState.Ejecting) vSpeed = 0f;
 		}
 
-
-		UpdatePosition();
-
-		//float x, y;
-		//
-		//PlanetUtilities.Spheric2Cartesian(theta, heightAtPos, out x, out y);
-		//
-		//
-
-        /*
-		if (State == AstronautState.Walking)
-		{
-			walkTime += Time.deltaTime / StepTime;
-			Vector3 rotation = transform.rotation.eulerAngles;
-    			rotation.z = Mathf.Sin(walkTime * Mathf.PI)*50;			transform.rotation = Quaternion.Euler(rotation);
-		}*/
-
-		/*
-		switch (State)
-		{
-			case AstronautState.Dashing:
-
-				break;
-			case AstronautState.Ejecting:
-
-				break;
-			case AstronautState.Idle:
-
-				break;
-			case AstronautState.Jumping:
-
-				break;
-			case AstronautState.Walking:
-
-				break;
-		}
-		 */
+		UpdatePosition();		
 	}
 
 	public void Move(float x, float y)
