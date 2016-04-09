@@ -44,21 +44,18 @@ public class Earthquake : MonoBehaviour {
 		}
 	}
 
-	void OnGUI()
-	{
-		if (GUI.Button(new Rect(100, 100, 50, 50), "BOOM"))
-		{
-			Debug.Log("Clicked the button with an image");
-			EarthquakeBoom();
-		}
-	}
-
 	private void EarthquakeBoom()
 	{
 		isExploding = true;
 		StartCoroutine(Explode());
 		Instantiate(ExplosionParticle);
-	    var camera = GameObject.Find("Main Camera");
+
+        var audioBoom = gameObject.GetComponent<AudioSource>();
+        audioBoom.bypassListenerEffects = true;
+        AudioSource.PlayClipAtPoint(audioBoom.clip, transform.position, audioBoom.volume);
+
+
+        var camera = GameObject.Find("Main Camera");
 	    if (camera)
 	    {
 	        var shaker = camera.GetComponent<CameraShake>();

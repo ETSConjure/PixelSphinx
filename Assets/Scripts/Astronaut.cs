@@ -46,7 +46,8 @@ public class Astronaut : MonoBehaviour {
 			
 			if (oldState == AstronautState.Dashing)
             {
-                _astronautAnimator.Idle();
+                _astronautAnimator.Land();
+                //_astronautAnimator.Idle();
 			}
             else if (State == AstronautState.Walking)
 			{
@@ -148,6 +149,7 @@ public class Astronaut : MonoBehaviour {
 			if (State == AstronautState.Dashing)
 			{
                 planet.PushWedge(this.theta);
+                
                 State = AstronautState.Idle;
             }
 
@@ -279,20 +281,4 @@ public class Astronaut : MonoBehaviour {
         }
     }
 
-    public void OnGUI()
-	{
-		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
-		{
-            Stun();
-			Debug.Log("Clicked the button with an image");
-            //_astronautAnimator.Walk();
-			//Eject();
-        }
-       /* if (GUI.Button(new Rect(60, 10, 150, 50), "Stop"))
-        {
-            Debug.Log("Clicked the button with an image");
-            _astronautAnimator.StopWalk();
-            //Eject();
-        }*/
-	}
 }
