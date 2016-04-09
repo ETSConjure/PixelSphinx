@@ -71,11 +71,12 @@ public class Astronaut : MonoBehaviour {
         _astronautAnimator = GetComponent<AstronautAnimator>();
         _astronautAnimator.aspi = this;
 		State = AstronautState.Idle;
+
 	    if (!planet)
 	    {
-	        p	    if (!planet)
-	    {e<PlanetManager>();
+	        planet = FindObjectOfType<PlanetManager>();
 	    }
+
 	    State = AstronautState.Idle;
 		//Debug.Log(planet.GetPlanetRadius(0));
 		theta = 0;
@@ -232,11 +233,11 @@ public class Astronaut : MonoBehaviour {
 	public void Dash()
 	{
 	    
-	    iS(Time.time < DashTime + lastDashTime)
+	    if (Time.time < DashTime + lastDashTime)
             return;
         
-        if (_state >= AstronautState.Ejecting)
-		return;
+        if (State >= AstronautState.Ejecting)
+		    return;
 
 	    lastDashTime = Time.time;
         planet.PushWedge(this.theta);
@@ -272,14 +273,5 @@ public class Astronaut : MonoBehaviour {
             State = AstronautState.Walking;
             _astronautAnimator.Walk();
         }
-
-        if (GUI.Button(new Rect(10, 190, 150, 50), "Eject"))
-        {
-           Debug.Lif(State == AstronautState.Walking)
-		{			StartCoroutine("WalkingStance");
-		}
-		{
-			StartCoroutine("WalkingStance");
-		}
-	}*/
+	}
 }
