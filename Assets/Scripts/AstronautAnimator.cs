@@ -48,6 +48,9 @@ public class AstronautAnimator : MonoBehaviour {
     public void Eject()
     {
         StartCoroutine(Spin());
+        var audio = aspi.GetComponent<AudioSource>();  //eject sound
+        audio.bypassListenerEffects = true;
+        AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
     }
 
     IEnumerator Spin()
