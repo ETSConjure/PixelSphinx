@@ -14,7 +14,7 @@ public class PlanetManager : MonoBehaviour
     public float CartierMinRatio = 0.4f;
     public float CartierMaxRatio = 2.0f;
     public float CartierStepSize = 0.25f;
-    public float CartierWaitBeforeRaise = 0.6f;
+    public float CartierWaitBeforeRaise = 2f;
 	public float balanceValue;
 	private float disbalance = 0f;
     public GameObject WedgePrefab = null;
@@ -82,7 +82,7 @@ public class PlanetManager : MonoBehaviour
             {
                 w.offset = 1.0f;
             }
-            else if (w.offset > 1.0f)
+            else if (w.offset > 1.0f && Time.time >= w.timeSincePushedToMaximum + CartierWaitBeforeRaise)
             {
                 if (!CartierResetRatioSpeedRandomize)
                 {
@@ -118,6 +118,7 @@ public class PlanetManager : MonoBehaviour
 
         var difference = CartierStepSize;
 
+        var wOffsetBefore = w.offset;
         w.offset = w.offset - CartierStepSize;
         if (w.offset <= CartierMinRatio)
         {
@@ -134,27 +135,31 @@ public class PlanetManager : MonoBehaviour
         var indexOppose = GetWedgeOpposé(index);
         var v = wedges[indexOppose];
 
-        v.offset = v.offset + difference;  //CartierStepSize; //diférentiel au lieu du step size
-        if (v.offset >= CartierMaxRatio)
+       // if (Time.time >= v.timeSincePushedToMinimum + CartierWaitBeforeRaise)  // résultats étranges ;)
+        if (wOffsetBefore >= 0.9f)
         {
-            v.offset = CartierMaxRatio;
-
-
-            //checker si on éjecte des players
-            var players = FindObjectsOfType<Astronaut>();
-            foreach (var p in players)
+            v.offset = v.offset + difference;  //CartierStepSize; //diférentiel au lieu du step size
+            if (v.offset >= CartierMaxRatio)
             {
-                if (v.tMax >= p.GetTheta() && p.GetTheta() >= v.tMin && p.IsGrounded())
+                v.offset = CartierMaxRatio;
+                w.timeSincePushedToMaximum = Time.time;
+
+                //checker si on éjecte des players
+                var players = FindObjectsOfType<Astronaut>();
+                foreach (var p in players)
                 {
-                    p.Eject();
+                    if (v.tMax >= p.GetTheta() && p.GetTheta() >= v.tMin && p.IsGrounded())
+                    {
+                        p.Eject();
+                    }
                 }
             }
-
-
+            v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
         }
        
+       
 
-            v.sprite.transform.localScale = new Vector3(v.offset, v.offset, 1);
+        
 
             // call fill gauge after every hit.
             var earthQuakeGauge = FindObjectOfType<Earthquake>();
@@ -299,6 +304,7 @@ public class PlanetManager : MonoBehaviour
         public float tMin = 0; //theta min et theta max : angle thetat de début et fin du cartier; 
         public float tMax = 0;
         public float timeSincePushedToMinimum = 0.0f;
+        public float timeSincePushedToMaximum = 0.0f;
         public GameObject sprite;         //sprite et collider 2D
         public GameObject gameObject;    //wedge prefab avec collider
     }
