@@ -28,7 +28,7 @@ public class Earthquake : MonoBehaviour {
     // Update is called once per frame
     public void Update () {
 
-		if(!isExploding) return;
+		if(isExploding) return;
 
 		float disbalance = pmgr.GetDisbalance();
 		float val = Mathf.Clamp((disbalance-CriticalMin) / (CriticalMax-CriticalMin),0,1);
@@ -38,7 +38,7 @@ public class Earthquake : MonoBehaviour {
 
 		core.color = new Color(1f, 1f - val, 1f - val);
 
-		if (val2 >= 1f)
+		if (val2 >= CriticalMax + 0.05f)
 		{
 			EarthquakeBoom();
 		}
