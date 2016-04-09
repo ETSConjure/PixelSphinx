@@ -234,7 +234,17 @@ public class Astronaut : MonoBehaviour {
         planet.PushWedge(this.theta);
 	}
 
-	public void OnGUI()
+    /// <summary>
+    /// A character is stunned when hit by asteroid.
+    /// </summary>
+    public void Stun()
+    {
+        print("Stunned");
+    }
+
+
+
+    public void OnGUI()
 	{
 		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
 			Debug.Log("Clicked the button with an image");
