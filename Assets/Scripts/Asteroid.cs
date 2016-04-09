@@ -34,7 +34,8 @@ public class Asteroid : MonoBehaviour
 
         if (otherCol.gameObject.tag == "Player")
         {
-            //Stun the player
+            ///Stun the player
+            otherCol.gameObject.GetComponent<Astronaut>().Stun();
         }
         if (otherCol.gameObject.tag == "Wedge")
         {
