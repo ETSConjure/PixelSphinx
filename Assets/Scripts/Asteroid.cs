@@ -81,8 +81,11 @@ public class Asteroid : MonoBehaviour
                 audio.bypassListenerEffects = true;
                 AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
 
-                var wait = new WaitForSeconds(emitter.GetComponent<ParticleSystem>().duration);
+
+
+                // var wait = new WaitForSeconds(emitter.GetComponent<ParticleSystem>().duration);
                 //Destroy(emitter);  //doesnt play if removed.
+                Destroy(emitter, emitter.GetComponent<ParticleSystem>().duration);
 
             }
 
