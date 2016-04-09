@@ -7,7 +7,7 @@ public class Astronaut : MonoBehaviour {
     private AstronautAnimator _astronautAnimator;
 	public enum AstronautState
 	{
-		Idle, Walking, Jumping, Dashing, Ejecting, Dead
+		Idle, Walking, Jumping, Dashing, Stun, Ejecting, Dead
 	}
 
 	public GameObject Rotator;
@@ -93,6 +93,7 @@ public class Astronaut : MonoBehaviour {
 	    {
 	        planet = FindObjectOfType<PlanetManager>();
 	    }
+		planet.addPlayer();
 
 	    State = AstronautState.Idle;
 		theta = 0;
@@ -290,6 +291,8 @@ public class Astronaut : MonoBehaviour {
 		vSpeed = EjectSpeed;
 	    _astronautAnimator.Eject();
 		grounded = false;
+
+		planet.playerDeath(this);
 	}
 
     /// <summary>
@@ -297,7 +300,7 @@ public class Astronaut : MonoBehaviour {
     /// </summary>
     public void Stun()
     {
-        print("Stunned");
+		//TODO
     }
 
     public void OnGUI()
