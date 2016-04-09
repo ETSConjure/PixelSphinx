@@ -43,25 +43,37 @@ public class AsteroidSpawner : TimerFunctionsClass
 
     public void SpawnAsteroidEvent()
     {
+
+
+        var planet = FindObjectOfType<PlanetManager>();
+
         if (!GenerationVersLesjoueurs)
         {
             // Random entre 10 et 20, * 1 ou -1
-            var x = UnityEngine.Random.Range(30.0f, 40.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
-            var y = UnityEngine.Random.Range(20.0f, 30.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
+            //var x = UnityEngine.Random.Range(30.0f, 40.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
+            //var y = UnityEngine.Random.Range(20.0f, 30.0f)*(Mathf.Floor(UnityEngine.Random.Range(0.0f, 1.99f))*2 - 1);
+
+
+            var angleRandom = UnityEngine.Random.Range(0, 359.9f);
 
 
             //0-3
             var AsteroidType = Mathf.RoundToInt(Mathf.Floor(UnityEngine.Random.Range(0f, 3.999f)));
 
             //instantiate as child of AsteroidSpawner
-            var a = Instantiate(AsteroidPrefabTypes[AsteroidType], new Vector3(x, y, 0.0f), Quaternion.identity);
+            //var a = Instantiate(AsteroidPrefabTypes[AsteroidType], new Vector3(x, y, 0.0f), Quaternion.identity);
+
+            Instantiate(AsteroidPrefabTypes[AsteroidType],
+                             planet.GetPlanetCoordinatesFromPlayerXY(angleRandom, UnityEngine.Random.Range(15f, 25f)),
+                              Quaternion.identity);
+
             //a.tranform.parent = this.transform;
 
         }
         else
         {
             var players =  GameObject.FindGameObjectsWithTag("Player");
-            var planet = FindObjectOfType<PlanetManager>();
+            
             foreach (var p in players)
             {
 

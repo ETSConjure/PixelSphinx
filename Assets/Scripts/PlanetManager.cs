@@ -7,6 +7,7 @@ public class PlanetManager : MonoBehaviour
 {
 	public float PlayerAngle;
 	public float PlayerOffset;
+    public  int _NbActivePlayersRemaining = 0;
     public int NbCartiers = 10;
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
     public float CartierResetRatioSpeedFactor = 0.23f;   //Entre 0.05 et 1 ou plus   on aime que ca restore lentement, randomnly
@@ -115,7 +116,31 @@ public class PlanetManager : MonoBehaviour
 
             w.sprite.transform.localScale = new Vector3(w.offset, w.offset,1.0f);
         }
-		//TODO_SR For each player
+        //TODO_SR For each player
+        VerifierPlayersActif();
+
+        if (_NbActivePlayersRemaining <= 1)
+        {
+            //TODO  Call WorldManger.EndGame ou whatever
+        }
+
+    }
+
+    private void VerifierPlayersActif()
+    {
+        
+        int nbJoueursTrouves = 0;
+        var players = GameObject.FindGameObjectsWithTag("Player");
+        
+        foreach (var p in players)
+        {
+            if (p.GetComponent<Astronaut>().State < Astronaut.AstronautState.Ejecting)
+            {
+                nbJoueursTrouves++;
+            }
+        }
+        
+        _NbActivePlayersRemaining = nbJoueursTrouves;
     }
 
     public void PushWedge(float thetaPlayerX)
