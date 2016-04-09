@@ -12,9 +12,11 @@ public class Astronaut : MonoBehaviour {
 
 	public GameObject Rotator;
 	public SpriteRenderer SpriteWalk;
-	public GameObject SpriteDash;
+    public GameObject SpriteDash;
+    public GameObject SpriteStun;
 
-	public float Width;
+	public float SpriteWidth;
+	public float SpriteHeight;
     public float DashTime = 0.4f; //Temps de l'animation et rate limiting
     private float lastDashTime = 0f;
 	public float StepTime;
@@ -43,10 +45,9 @@ public class Astronaut : MonoBehaviour {
 			
 			if (oldState == AstronautState.Dashing)
             {
-                _astronautAnimator.Land();
+                _astronautAnimator.Idle();
 			}
-            
-			if (State == AstronautState.Walking)
+            else if (State == AstronautState.Walking)
 			{
                 _astronautAnimator.Walk(walkRight);
 			}
@@ -55,6 +56,10 @@ public class Astronaut : MonoBehaviour {
 
 	private float theta = 0;
 	private float height = 0;
+	public float Height
+	{
+		get { return height; }
+	}
     private float vSpeed = 0;
 	private bool grounded = false;
     private bool walkRight = false;
@@ -94,7 +99,7 @@ public class Astronaut : MonoBehaviour {
 	private void UpdatePosition()
 	{
 		//float heightAtPos = planet.GetPlanetRadius(theta);
-		transform.localPosition = new Vector3(0, height, 0);
+		transform.localPosition = new Vector3(0, height + SpriteHeight / 2, 0);
 		Rotator.transform.localRotation = Quaternion.Euler(0, 0, theta - 108);
 	}
 
@@ -105,7 +110,7 @@ public class Astronaut : MonoBehaviour {
 
 	private float GetGroundRadius(float theta)
 	{
-		float displacement = PlanetUtilities.GetDisplacementAngle(Width / 2, height);
+		float displacement = PlanetUtilities.GetDisplacementAngle(SpriteWidth / 2, height);
 		float radius1 = planet.GetPlanetRadius(Repeat(theta + displacement, 360));
 		float radius2 = planet.GetPlanetRadius(Repeat(theta - displacement, 360));
 		//float x1, y1, x2, y2;
@@ -156,6 +161,9 @@ public class Astronaut : MonoBehaviour {
 
 	public void Move(float x, float y)
 	{
+		if (State >= AstronautState.Dashing )
+			return;
+
         float playerX, playerY;
         PlanetUtilities.Spheric2Cartesian(theta - 108, height, out playerX, out playerY);
 
@@ -165,9 +173,6 @@ public class Astronaut : MonoBehaviour {
         float proj = Vector3.Dot(new Vector3(x, y, 0), dirV);
 
         float move = proj;
-
-		if (State >= AstronautState.Dashing )
-			return;
 
 		if (State < AstronautState.Jumping)
 		{
@@ -183,28 +188,20 @@ public class Astronaut : MonoBehaviour {
 			}
 		}
 
-		if (State < AstronautState.Dashing)
+		if (-0.2 < move && move < 0.2) return;
+
+		float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
+
+		float newTheta = Repeat(theta + movement, 360);
+
+		float newHeight = GetGroundRadius(newTheta);
+		if (newHeight > height)
 		{
-			if (-0.2 < move && move < 0.2) return;
-
-			float movement = PlanetUtilities.GetDisplacementAngle(Speed * -move, height) * Time.deltaTime;
-
-			float newTheta = Repeat(theta + movement, 360);
-
-			float newHeight = GetGroundRadius(newTheta);
-			if (newHeight > height)
-			{
-				//Debug.Log("Blocked by wall");
-				return; // Blocked by wall
-			}
-
-			theta = newTheta;
+			//Debug.Log("Blocked by wall");
+			return; // Blocked by wall
 		}
-	    if (State == AstronautState.Dashing && grounded)
-	    {
-            //TODO arreter mouvement lateral
-            State=AstronautState.Idle;
-	    }
+
+		theta = newTheta;
 	}
 
 	public void Jump()
@@ -259,13 +256,32 @@ public class Astronaut : MonoBehaviour {
     /// </summary>
     public void Stun()
     {
-		//TODO
+        if (State < AstronautState.Ejecting)
+        {
+            State = AstronautState.Stun;
+            StartCoroutine(StunTimeout());
+            _astronautAnimator.Stun();
+        }
+    }
+
+    IEnumerator StunTimeout()
+    {
+        for (float i = 0f; i <0.6f; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        if (State < AstronautState.Ejecting)
+        {
+            State = AstronautState.Idle;
+            _astronautAnimator.Idle();
+        }
     }
 
     public void OnGUI()
 	{
 		if (GUI.Button(new Rect(10, 10, 150, 50), State.ToString()))
 		{
+            Stun();
 			Debug.Log("Clicked the button with an image");
             //_astronautAnimator.Walk();
 			//Eject();

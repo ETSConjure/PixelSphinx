@@ -27,13 +27,23 @@ public class AstronautAnimator : MonoBehaviour {
     {
         aspi.SpriteWalk.gameObject.SetActive(true);
         aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
 
     public void Dash()
     {
         aspi.SpriteWalk.gameObject.SetActive(false);
         aspi.SpriteDash.gameObject.SetActive(true);
+        aspi.SpriteStun.gameObject.SetActive(false);
     }
+
+    public void Idle()
+    {
+
+        aspi.SpriteWalk.gameObject.SetActive(true);
+        aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(false);
+	}
 
     public void Land()
     {
@@ -42,14 +52,13 @@ public class AstronautAnimator : MonoBehaviour {
         runninParticleEmitter.transform.Rotate(0,180f,0.0f);
        
         Destroy(runninParticleEmitter, runninParticleEmitter.GetComponent<ParticleSystem>().duration);
+		Idle();
 
         var impactAudio = DashImpactSound.GetComponent<AudioSource>();
         impactAudio.bypassListenerEffects = true;
         AudioSource.PlayClipAtPoint(impactAudio.clip, transform.position, impactAudio.volume);
 
 
-        aspi.SpriteWalk.gameObject.SetActive(true);
-        aspi.SpriteDash.gameObject.SetActive(false);
     }
      
 
@@ -64,6 +73,14 @@ public class AstronautAnimator : MonoBehaviour {
         var audio = aspi.GetComponent<AudioSource>();  //eject sound
         audio.bypassListenerEffects = true;
         AudioSource.PlayClipAtPoint(audio.clip, transform.position, audio.volume);
+        Stun();
+    }
+
+    public void Stun()
+    {
+        aspi.SpriteWalk.gameObject.SetActive(false);
+        aspi.SpriteDash.gameObject.SetActive(false);
+        aspi.SpriteStun.gameObject.SetActive(true);
     }
 
     IEnumerator Spin()
