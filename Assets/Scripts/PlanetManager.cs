@@ -2,11 +2,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class PlanetManager : MonoBehaviour
 {
 	public float PlayerAngle;
 	public float PlayerOffset;
+	public bool InMenu;
+	public GameObject YouWin;
     public  int _NbActivePlayersRemaining = 0;
     public int NbCartiers = 10;
     public float TailleCartiersEnDegres = 0;  //radian -> valeurs 0 a 360
@@ -22,6 +25,7 @@ public class PlanetManager : MonoBehaviour
     public GameObject WedgePrefab = null;
     public List<Wedge> wedges = new List<Wedge>();
 	private int numPlayer;
+	private bool gameEnded = false;
 
     // Use this for initialization
     public void Awake () {
@@ -65,9 +69,6 @@ public class PlanetManager : MonoBehaviour
         {
             Destroy(GameObject.Find("Astronaut_3"));
         }
-
-
-
     }
 
     // Update is called once per frame
@@ -229,6 +230,7 @@ public class PlanetManager : MonoBehaviour
 
 	public void EjectPlayers(float range)
 	{
+		if (InMenu) return;
 		Astronaut[] players = FindObjectsOfType<Astronaut>();
 		foreach (Astronaut p in players)
 		{
@@ -260,7 +262,6 @@ public class PlanetManager : MonoBehaviour
                     }
                 }
             }
-               
         }
     }
 
@@ -270,14 +271,21 @@ public class PlanetManager : MonoBehaviour
 		//check if all players are dead
 		if (numPlayer < 2)
 		{
-			if (numPlayer < 1)
+			if (!gameEnded)
+			{
+				StartCoroutine(EndGame());
+				WorldManager.Instance.PlayersActive = new bool[] { true, true, true, true };
+				YouWin.SetActive(true);
+				gameEnded = true;
+			}
+			/*if (numPlayer < 1)
 			{
 				print("game is lost");
 			}
 			else
 			{
 				print("winner is you!");
-			}
+			}*/
 		}
 	}
 
@@ -352,11 +360,20 @@ public class PlanetManager : MonoBehaviour
         return new Vector3(x, y, 0);
     }
 
-    /// <summary>
-    /// retourn le no de plateforme
-    /// </summary>
-    /// <param name="thetaPlayerX"></param>
-    public int GetWedgeIndex(float thetaPlayerX)
+	IEnumerator EndGame()
+	{
+		for (float i = 0; i < 5; i+= Time.deltaTime)
+		{
+			yield return null;
+		}
+		SceneManager.LoadScene("Selection");
+	}
+
+	/// <summary>
+	/// retourn le no de plateforme
+	/// </summary>
+	/// <param name="thetaPlayerX"></param>
+	public int GetWedgeIndex(float thetaPlayerX)
     {
         return  (int)Math.Floor(thetaPlayerX / TailleCartiersEnDegres);
     }

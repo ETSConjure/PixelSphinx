@@ -145,7 +145,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d2d6ea121d5394f438fc5ae564a441a1, type: 3}
-  m_Color: {r: 0.08823532, g: 1, b: 0.13225162, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &72971843
@@ -423,7 +423,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d2d6ea121d5394f438fc5ae564a441a1, type: 3}
-  m_Color: {r: 0.08823532, g: 1, b: 0.13225162, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &771276056
@@ -899,7 +899,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d2d6ea121d5394f438fc5ae564a441a1, type: 3}
-  m_Color: {r: 0.08823532, g: 1, b: 0.13225162, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &1394874970
@@ -957,7 +957,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d2d6ea121d5394f438fc5ae564a441a1, type: 3}
-  m_Color: {r: 0.08823532, g: 1, b: 0.13225162, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!4 &1419848163 stripped
@@ -1034,6 +1034,10 @@ Prefab:
     - target: {fileID: 11471614, guid: 198e988adacced646a19f757f6237ae1, type: 2}
       propertyPath: CartierResetRatioSpeedFactor
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11471614, guid: 198e988adacced646a19f757f6237ae1, type: 2}
+      propertyPath: InMenu
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 198e988adacced646a19f757f6237ae1, type: 2}

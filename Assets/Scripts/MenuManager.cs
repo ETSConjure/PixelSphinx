@@ -7,6 +7,11 @@ public class MenuManager : MonoBehaviour {
 	public bool canPlay = false;
 	public GameObject PressStart;
 
+	void Awake()
+	{
+		WorldManager.Instance.PlayersActive = new bool[] { true, true, true, true } ;
+	}
+
 	// Use this for initialization
 	void Start () {
 		//Place all players
